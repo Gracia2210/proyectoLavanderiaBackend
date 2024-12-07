@@ -1,0 +1,15 @@
+# Ignorar carpetas y archivos innecesarios
+.gradle/
+build/
+!build/libs/*.jar  # Excluir la carpeta build excepto el JAR en build/libs
+!build/resources/main/**  # Incluir los recursos principales
+
+# Ignorar configuraciones de IDE
+.idea/
+*.iml
+*.class
+*.log
+
+# Ignorar archivos del sistema
+*.swp
+*.swo

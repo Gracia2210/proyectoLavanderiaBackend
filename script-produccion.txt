@@ -1,0 +1,3 @@
+gcloud app logs tail -s default
+gcloud config set project epicsbot-441318
+gcloud app deploy

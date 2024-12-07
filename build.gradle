@@ -1,0 +1,63 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '2.5.5'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+}
+
+group = 'pe.edu.usmp.lavanderia.app'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+	mavenCentral()
+	maven { url "https://repo.spring.io/snapshot" }
+	maven { url "https://repo.spring.io/milestone" }
+	maven { url "https://plugins.gradle.org/m2/" }
+}
+tasks.withType(JavaCompile).configureEach {
+	options.encoding = 'UTF-8'
+}
+
+dependencies {
+	implementation group: 'org.springframework.security.oauth', name: 'spring-security-oauth2', version: '2.3.4.RELEASE'
+   	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation group: 'org.springframework.security', name: 'spring-security-jwt', version: '1.0.9.RELEASE'
+	implementation group: 'org.springframework.security', name: 'spring-security-ldap'
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
+	implementation group: 'org.springframework.boot', name: 'spring-boot-devtools'
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter'
+    testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'
+    implementation group: 'org.springframework.data', name: 'spring-data-ldap'
+    implementation group: 'org.springframework.ldap', name: 'spring-ldap-core'
+    testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-ldap'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jdbc'
+	implementation group: 'org.glassfish.jaxb', name: 'jaxb-runtime'
+	//implementation group: 'javax.xml.bind', name: 'jaxb-api'
+	implementation group: 'org.json', name: 'json', version: '20201115'
+    implementation group: 'org.ocpsoft.prettytime', name: 'prettytime', version: '5.0.2.Final'
+	//runtimeOnly 'com.oracle.database.jdbc:ojdbc8' eliminar
+	implementation group: 'com.oracle.database.jdbc', name: 'ojdbc8', version: '21.4.0.0.1'
+	//implementation group: 'com.google.zxing', name: 'core', version: '2.0'
+	//implementation group: 'com.google.zxing', name: 'javase', version: '3.3.0'
+	implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.30'
+	implementation 'org.apache.pdfbox:pdfbox:2.0.27'
+	implementation 'javax.servlet:javax.servlet-api:4.0.1'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	//LIBRERIAS NECESARIAS PARA GENERAR PDF
+	implementation group: 'com.lowagie', name: 'itext', version: '2.1.7'
+	implementation 'net.sf.jasperreports:jasperreports:6.17.0'
+	implementation group: 'org.olap4j', name: 'olap4j', version: '1.2.0'
+	//LIBRERIAS PARA CORREO
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf:2.1.1.RELEASE'
+	//implementation group: 'com.microsoft.cognitiveservices.speech', name: 'client-sdk', version: '1.41.1' , ext: "jar"
+	//implementation fileTree('lib')
+	//LIBRERIAS PARA AUTENTICACION CON MICROSOFT
+	//implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+	//implementation 'org.springframework.boot:spring-boot-starter-security'
+
+}
+
+test {
+	useJUnitPlatform()
+}
