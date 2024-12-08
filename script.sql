@@ -61,3 +61,5 @@ INSERT INTO persona (
 VALUES (
     'ROBERT D’JESÚS', 'PAREDES', 'GARCIA', 'M', 'dg080119@gmail.com', '913256561', 2
 );
+
+SELECT * FROM usuario;
