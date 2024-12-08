@@ -103,7 +103,6 @@ public class AdminRepositoryImpl extends JdbcDaoSupport implements AdminReposito
 
 	@Override
 	public void editarUsuario(CreaModiUsuarioRequest datos) {
-
 		if (datos.getPassword() != null) {
 			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 			String hashedPassword = passwordEncoder.encode(datos.getPassword());
@@ -120,10 +119,8 @@ public class AdminRepositoryImpl extends JdbcDaoSupport implements AdminReposito
 		jdbcTemplate.update(sqlUpdateAlumno, datos.getNombre(), datos.getApellidoPaterno(), datos.getApellidoMaterno(),
 				datos.getSexo(), datos.getEmail(), datos.getTelefono(),
 				Long.parseLong(datos.getId()));
-
 		String sqlDeleteRoles = "DELETE FROM usuario_rol WHERE usuario_id = ?";
 		jdbcTemplate.update(sqlDeleteRoles, Long.parseLong(datos.getId()));
-
 		String sqlInsertRol = "INSERT INTO usuario_rol (usuario_id, rol_id) VALUES (?, ?)";
 		for (CreaModiRolRequest rol : datos.getRoles()) {
 			jdbcTemplate.update(sqlInsertRol, Long.parseLong(datos.getId()), rol.getId());
@@ -178,5 +175,4 @@ public class AdminRepositoryImpl extends JdbcDaoSupport implements AdminReposito
 	public List<CodNombreResponse> listarCategoria() {
 		return jdbcTemplate.query("SELECT id cod,nombre FROM categoria ORDER BY id asc", BeanPropertyRowMapper.newInstance(CodNombreResponse.class));
 	}
-
 }
