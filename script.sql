@@ -62,4 +62,18 @@ VALUES (
     'ROBERT D’JESÚS', 'PAREDES', 'GARCIA', 'M', 'dg080119@gmail.com', '913256561', 2
 );
 
-SELECT * FROM usuario;
+CREATE TABLE cliente (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    doc_iden VARCHAR(20) NOT NULL,
+    nombre VARCHAR(255) NOT NULL,
+    apellido_paterno VARCHAR(255) NOT NULL,
+    apellido_materno VARCHAR(255) NOT NULL,
+	telefono VARCHAR(255) NOT NULL,
+	email VARCHAR(255) NULL,
+	enabled BOOLEAN DEFAULT TRUE
+);
+
+
+
+
+

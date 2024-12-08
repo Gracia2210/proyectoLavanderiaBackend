@@ -59,7 +59,6 @@ public class AdminServiceImpl implements AdminService {
 
 		if (repo.esUsernameUsado(datos.getUsuario(), datos.getUsuario_id())) {
 			resp.setIcon(Constantes.ICON_INFO);
-			;
 			resp.setMensaje("El usuario " + datos.getUsuario() + " ya existe");
 		} else {
 			repo.crearUsuario(datos);
