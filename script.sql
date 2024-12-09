@@ -73,7 +73,103 @@ CREATE TABLE cliente (
 	enabled BOOLEAN DEFAULT TRUE
 );
 
+CREATE TABLE servicio (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    descripcion VARCHAR(255) NOT NULL,
+	enabled BOOLEAN DEFAULT TRUE
+);
 
+INSERT INTO servicio (descripcion) VALUES 
+('Lavado y Secado Básico'),
+('Planchado'),
+('Lavado en Seco (Dry Cleaning)'),
+('Desmanchado y Tratamiento Especial'),
+('Servicios Personalizados'),
+('Recolección y Entrega a Domicilio'),
+('Suscripciones y Paquetes Especiales'),
+('Servicio Express'),
+('Edredones o Cobertores'),
+('Alfombras'),
+('Cortinas');
+
+CREATE TABLE subservicio (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    descripcion VARCHAR(255) NOT NULL,
+    monto DECIMAL(10, 2) NOT NULL,
+	enabled BOOLEAN DEFAULT TRUE,
+	servicio_id INT,
+	FOREIGN KEY (servicio_id) REFERENCES servicio(id)
+);
+
+-- Lavado y Secado Básico
+INSERT INTO subservicio (descripcion, monto, servicio_id) VALUES 
+('Lavado Estándar (por kilo)', 6.00, 1),
+('Lavado Delicado (por kilo)', 8.00, 1),
+('Secado Regular (por kilo)', 4.00, 1),
+('Secado en Tendedero (por kilo)', 5.00, 1);
+
+-- Planchado
+INSERT INTO subservicio (descripcion, monto, servicio_id) VALUES 
+('Planchado Básico (por prenda)', 3.00, 2),
+('Planchado de Prendas Delicadas (por prenda)', 5.00, 2),
+('Planchado de Prendas Grandes', 8.00, 2);
+
+-- Lavado en Seco (Dry Cleaning)
+INSERT INTO subservicio (descripcion, monto, servicio_id) VALUES 
+('Trajes (completo)', 20.00, 3),
+('Vestidos de Fiesta', 25.00, 3),
+('Abrigos o Ropa de Invierno', 20.00, 3),
+('Desmanchado Especializado', 5.00, 3);
+
+-- Desmanchado y Tratamiento Especial
+INSERT INTO subservicio (descripcion, monto, servicio_id) VALUES 
+('Desmanchado Básico (por prenda)', 3.00, 4),
+('Desmanchado Profundo (por prenda)', 6.00, 4),
+('Aromatización (por kilo)', 2.00, 4),
+('Tratamiento Antibacteriano (por kilo)', 3.00, 4);
+
+-- Servicios Personalizados
+INSERT INTO subservicio (descripcion, monto, servicio_id) VALUES 
+('Empaque al Vacío', 3.00, 5),
+('Doblez Especial (por prenda)', 2.00, 5),
+('Almidonado (por prenda)', 4.00, 5);
+
+-- Recolección y Entrega a Domicilio
+INSERT INTO subservicio (descripcion, monto, servicio_id) VALUES 
+('Recogida y Entrega en la Misma Zona', 10.00, 6),
+('Recogida y Entrega Fuera de Zona', 15.00, 6);
+
+-- Paquetes y Suscripciones
+INSERT INTO subservicio (descripcion, monto, servicio_id) VALUES 
+('Paquete Básico Semanal (hasta 5 kg de ropa)', 35.00, 7),
+('Paquete Mensual (hasta 20 kg de ropa)', 120.00, 7),
+('Suscripción para Empresas (por kilo)', 5.00, 7);
+
+-- Servicio Express
+INSERT INTO subservicio (descripcion, monto, servicio_id) VALUES 
+('Lavado y Entrega Rápida (por kilo, entrega en 24 horas)', 10.00, 8),
+('Lavado en Seco Express', 25.00, 8);
+
+-- Edredones o Cobertores
+INSERT INTO subservicio (descripcion, monto, servicio_id) VALUES 
+('1 Plaza', 20.00, 9),
+('1 Plaza y Media', 25.00, 9),
+('2 Plazas', 30.00, 9),
+('2 Plazas y Media', 35.00, 9),
+('Queen', 40.00, 9),
+('King', 40.00, 9);
+
+-- Alfombras
+INSERT INTO subservicio (descripcion, monto, servicio_id) VALUES 
+('Pequeña', 25.00, 10),
+('Mediana', 35.00, 10),
+('Grande', 50.00, 10);
+
+-- Cortinas
+INSERT INTO subservicio (descripcion, monto, servicio_id) VALUES 
+('Pequeña', 15.00, 11),
+('Mediana', 20.00, 11),
+('Grande', 25.00, 11);
 
 
 
