@@ -104,4 +104,21 @@ public class ServicioServiceImpl implements ServicioService {
         }
         return resp;
     }
+
+    @Override
+    public MsgResponse activarServicio(int id, Boolean activo) {
+        MsgResponse resp = new MsgResponse();
+        int filasAfectadas = servicioRepository.activarServicio(id,activo);
+        if (filasAfectadas > 0) {
+            resp.setCod(Constantes.SUCCESS_COD);
+            resp.setIcon(Constantes.ICON_INFO);
+            String activoTexto=activo?"activado":"inactivado";
+            resp.setMensaje("Se ha "+activoTexto+" el servicio satisfactoriamente");
+        } else {
+            resp.setCod(Constantes.NULL_COD);
+            resp.setIcon(Constantes.ICON_ERROR);
+            resp.setMensaje("No se encontró el servicio con el ID proporcionado");
+        }
+        return resp;
+    }
 }

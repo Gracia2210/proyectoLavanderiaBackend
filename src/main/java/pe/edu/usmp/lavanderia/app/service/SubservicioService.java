@@ -11,4 +11,5 @@ public interface SubservicioService {
     MsgResponse editarSubservicio(SubservicioResponse subservicio);
     ModelResponse<SubservicioResponse> buscarPorId(int id);
     MsgResponse eliminarSubservicioPorId(int id);
+    MsgResponse activarSubservicio(int id,Boolean activo);
 }

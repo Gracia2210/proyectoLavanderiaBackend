@@ -10,4 +10,5 @@ public interface ServicioRepository {
     int editarServicio(int id, String descripcion);
     ServicioResponse buscarPorId(int id);
     int eliminarServicioPorId(int id);
+    int activarServicio(int id,Boolean activo);
 }

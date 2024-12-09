@@ -39,4 +39,9 @@ public class ServicioController {
     public MsgResponse eliminarServicio(@PathVariable int id) {
         return servicioService.eliminarServicioPorId(id);
     }
+
+    @RequestMapping(value = "/habilitar/{id}/{activo}", method = RequestMethod.POST)
+    public MsgResponse activarServicio(@PathVariable int id,@PathVariable  Boolean activo) {
+        return servicioService.activarServicio(id,activo);
+    }
 }

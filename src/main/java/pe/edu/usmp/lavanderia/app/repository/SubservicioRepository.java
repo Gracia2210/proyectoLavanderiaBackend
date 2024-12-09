@@ -10,4 +10,5 @@ public interface SubservicioRepository {
     int editarSubservicio(SubservicioResponse subservicio);
     SubservicioResponse buscarPorId(int id);
     int eliminarSubservicioPorId(int id);
+    int activarSubservicio(int id,Boolean activo);
 }

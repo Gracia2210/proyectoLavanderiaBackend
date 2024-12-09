@@ -77,7 +77,7 @@ public class ClienteRepositoryImpl  extends JdbcDaoSupport implements ClienteRep
 
     @Override
     public List<ClienteResponse> buscarClientes(BusquedaClienteRequest request) {
-        StringBuilder sql = new StringBuilder("SELECT id, doc_iden, nombre, apellido_paterno, apellido_materno, telefono, email FROM cliente WHERE enabled=TRUE");
+        StringBuilder sql = new StringBuilder("SELECT id, doc_iden, nombre, apellido_paterno, apellido_materno, telefono, email FROM cliente WHERE enabled=TRUE ");
         List<Object> params = new ArrayList<>();
 
         if (request.getTipo() == 1) {

@@ -102,4 +102,21 @@ public class SubservicioServiceImpl implements SubservicioService {
         return resp;
     }
 
+    @Override
+    public MsgResponse activarSubservicio(int id, Boolean activo) {
+        MsgResponse resp = new MsgResponse();
+        int filasAfectadas = subservicioRepository.activarSubservicio(id,activo);
+        if (filasAfectadas > 0) {
+            resp.setCod(Constantes.SUCCESS_COD);
+            resp.setIcon(Constantes.ICON_INFO);
+            String activoTexto=activo?"activado":"inactivado";
+            resp.setMensaje("Se ha "+activoTexto+" el subservicio satisfactoriamente");
+        } else {
+            resp.setCod(Constantes.NULL_COD);
+            resp.setIcon(Constantes.ICON_ERROR);
+            resp.setMensaje("No se encontró el subservicio con el ID proporcionado");
+        }
+        return resp;
+    }
+
 }

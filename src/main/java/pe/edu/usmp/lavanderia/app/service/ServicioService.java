@@ -11,4 +11,5 @@ public interface ServicioService {
     MsgResponse editarServicio(int id, String descripcion);
     ModelResponse<ServicioResponse> buscarPorId(int id);
     MsgResponse eliminarServicioPorId(int id);
+    MsgResponse activarServicio(int id, Boolean activo);
 }

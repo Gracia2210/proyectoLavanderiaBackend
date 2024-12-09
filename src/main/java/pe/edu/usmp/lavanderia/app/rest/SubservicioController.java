@@ -43,6 +43,11 @@ public class SubservicioController {
         return subservicioService.eliminarSubservicioPorId(id);
     }
 
+    @RequestMapping(value = "/habilitar/{id}/{activo}", method = RequestMethod.POST)
+    public MsgResponse activarSubservicio(@PathVariable int id,@PathVariable  Boolean activo){
+        return subservicioService.activarSubservicio(id,activo);
+    }
+
 }
 
 

@@ -25,7 +25,7 @@ public class ServicioRepositoryImpl extends JdbcDaoSupport implements ServicioRe
     }
     @Override
     public List<ServicioResponse> listarServicios() {
-        String sql = "SELECT id, descripcion FROM servicio WHERE enabled = TRUE";
+        String sql = "SELECT id, descripcion , enabled FROM servicio";
         return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(ServicioResponse.class));
     }
     @Override
@@ -42,14 +42,20 @@ public class ServicioRepositoryImpl extends JdbcDaoSupport implements ServicioRe
 
     @Override
     public ServicioResponse buscarPorId(int id) {
-        String sql = "SELECT id, descripcion FROM servicio WHERE id = ?";
+        String sql = "SELECT id, descripcion,enabled FROM servicio WHERE id = ?";
         return jdbcTemplate.queryForObject(sql, BeanPropertyRowMapper.newInstance(ServicioResponse.class), id);
     }
 
     @Override
     public int eliminarServicioPorId(int id) {
-        String sql = "UPDATE servicio SET enabled = FALSE WHERE id = ?";
+        String sql = "DELETE FROM servicio WHERE id = ?";
         return jdbcTemplate.update(sql, id);
+    }
+
+    @Override
+    public int activarServicio(int id,Boolean activo) {
+        String sql = "UPDATE servicio SET enabled=? WHERE id = ?";
+        return jdbcTemplate.update(sql,activo, id);
     }
 
 }

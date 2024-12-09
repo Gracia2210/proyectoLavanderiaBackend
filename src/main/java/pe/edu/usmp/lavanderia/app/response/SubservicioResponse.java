@@ -5,6 +5,9 @@ public class SubservicioResponse {
     private String descripcion;
     private double monto;
     private int servicioId;
+    private String unidad;
+    private Boolean soloSeleccion;
+    private Boolean enabled;
 
     public int getId() {
         return id;
@@ -36,5 +39,29 @@ public class SubservicioResponse {
 
     public void setServicioId(int servicioId) {
         this.servicioId = servicioId;
+    }
+
+    public String getUnidad() {
+        return unidad;
+    }
+
+    public void setUnidad(String unidad) {
+        this.unidad = unidad;
+    }
+
+    public Boolean getSoloSeleccion() {
+        return soloSeleccion;
+    }
+
+    public void setSoloSeleccion(Boolean soloSeleccion) {
+        this.soloSeleccion = soloSeleccion;
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
     }
 }
