@@ -4,7 +4,8 @@ public class ServicioPagoResponse {
     private Integer cod;
     private String nombre;
     private Boolean soloSeleccion;
-    private String unidad;
+    private String tipo;
+    private String detalleTipo;
     private double monto;
     private String cantidad;
     private String montoTotal;
@@ -25,6 +26,10 @@ public class ServicioPagoResponse {
         this.nombre = nombre;
     }
 
+    public String getTipo() {
+        return tipo;
+    }
+
     public Boolean getSoloSeleccion() {
         return soloSeleccion;
     }
@@ -33,12 +38,12 @@ public class ServicioPagoResponse {
         this.soloSeleccion = soloSeleccion;
     }
 
-    public String getUnidad() {
-        return unidad;
+    public String getDetalleTipo() {
+        return detalleTipo;
     }
 
-    public void setUnidad(String unidad) {
-        this.unidad = unidad;
+    public void setDetalleTipo(String detalleTipo) {
+        this.detalleTipo = detalleTipo;
     }
 
     public double getMonto() {

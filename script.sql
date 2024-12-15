@@ -96,41 +96,42 @@ CREATE TABLE subservicio (
     id INT AUTO_INCREMENT PRIMARY KEY,
     descripcion VARCHAR(255) NOT NULL,
     monto DECIMAL(10, 2) NOT NULL,
-    unidad VARCHAR(255) NULL,
-    solo_seleccion  BOOLEAN DEFAULT FALSE,
+    tipo char(1) DEFAULT '1' NOT NULL,
+    detalle_tipo VARCHAR(255) NULL,
 	enabled BOOLEAN DEFAULT TRUE,
 	servicio_id INT,
+    solo_seleccion  BOOLEAN DEFAULT FALSE,
 	FOREIGN KEY (servicio_id) REFERENCES servicio(id)
 );
 
 -- Lavado y Secado Básico
-INSERT INTO subservicio (descripcion, monto, servicio_id,unidad) VALUES 
+INSERT INTO subservicio (descripcion, monto, servicio_id,detalle_tipo) VALUES 
 ('Lavado Estándar', 6.00, 1,'KILO'),
 ('Lavado Delicado (por kilo)', 8.00, 1,'KILO'),
 ('Secado Regular (por kilo)', 4.00, 1,'KILO'),
 ('Secado en Tendedero (por kilo)', 5.00, 1,'KILO');
 
 -- Planchado
-INSERT INTO subservicio (descripcion, monto, servicio_id,unidad) VALUES 
+INSERT INTO subservicio (descripcion, monto, servicio_id,detalle_tipo) VALUES 
 ('Planchado Básico', 3.00, 2,'PRENDA'),
 ('Planchado de Prendas Delicadas', 5.00, 2,'PRENDA'),
 ('Planchado de Prendas Grandes', 8.00, 2,'PRENDA');
 
 -- Lavado en Seco (Dry Cleaning)
-INSERT INTO subservicio (descripcion, monto, servicio_id) VALUES 
-('Trajes (completo)', 20.00, 3),
-('Vestidos de Fiesta', 25.00, 3),
-('Abrigos o Ropa de Invierno', 20.00, 3);
+INSERT INTO subservicio (descripcion, monto, servicio_id,detalle_tipo) VALUES 
+('Trajes (completo)', 20.00, 3,'TRAJE'),
+('Vestidos de Fiesta', 25.00, 3,'TRAJE'),
+('Abrigos o Ropa de Invierno', 20.00, 3,'TRAJE');
 
 -- Desmanchado y Tratamiento Especial
-INSERT INTO subservicio (descripcion, monto, servicio_id,unidad) VALUES 
+INSERT INTO subservicio (descripcion, monto, servicio_id,detalle_tipo) VALUES 
 ('Desmanchado Básico', 3.00, 4,'PRENDA'),
 ('Desmanchado Profundo', 6.00, 4,'PRENDA'),
 ('Aromatización', 2.00, 4,'KILO'),
 ('Tratamiento Antibacteriano', 3.00, 4,'KILO');
 
 -- Servicios Personalizados
-INSERT INTO subservicio (descripcion, monto, servicio_id,unidad) VALUES 
+INSERT INTO subservicio (descripcion, monto, servicio_id,detalle_tipo) VALUES 
 ('Empaque al Vacío', 3.00, 5,'PAQUETE'),
 ('Doblez Especial (por prenda)', 2.00, 5,'PRENDA'),
 ('Almidonado (por prenda)', 4.00, 5,'PRENDA');
@@ -141,35 +142,35 @@ INSERT INTO subservicio (descripcion, monto, servicio_id,solo_seleccion) VALUES
 ('Recogida y Entrega Fuera de Zona', 15.00, 6,true);
 
 -- Paquetes y Suscripciones
-INSERT INTO subservicio (descripcion, monto, servicio_id,unidad) VALUES 
+INSERT INTO subservicio (descripcion, monto, servicio_id,detalle_tipo) VALUES 
 ('Paquete Básico Semanal (hasta 5 kg de ropa)', 35.00, 7,'KILO'),
 ('Paquete Mensual (hasta 20 kg de ropa)', 120.00, 7,'KILO'),
 ('Suscripción para Empresas (por kilo)', 5.00, 7,'KILO');
 
 -- Servicio Express
-INSERT INTO subservicio (descripcion, monto, servicio_id,unidad) VALUES 
+INSERT INTO subservicio (descripcion, monto, servicio_id,detalle_tipo) VALUES 
 ('Lavado y Entrega Rápida (por kilo, entrega en 24 horas)', 10.00, 8,'KILO');
 
 -- Edredones o Cobertores
-INSERT INTO subservicio (descripcion, monto, servicio_id,solo_seleccion) VALUES 
-('1 Plaza', 20.00, 9,true),
-('1 Plaza y Media', 25.00, 9,true),
-('2 Plazas', 30.00, 9,true),
-('2 Plazas y Media', 35.00, 9,true),
-('Queen', 40.00, 9,true),
-('King', 40.00, 9,true);
+INSERT INTO subservicio (descripcion, monto, servicio_id,detalle_tipo) VALUES 
+('Plaza', 20.00, 9,'PLAZA'),
+('Plaza y Media', 25.00, 9,'PLAZA'),
+('Plazas', 30.00, 9,'PLAZA'),
+('Plazas y Media', 35.00, 9,'PLAZA'),
+('Queen', 40.00, 9,'PLAZA'),
+('King', 40.00, 9,'PLAZA');
 
 -- Alfombras
-INSERT INTO subservicio (descripcion, monto, servicio_id,solo_seleccion) VALUES 
-('Pequeña', 25.00, 10,true),
-('Mediana', 35.00, 10,true),
-('Grande', 50.00, 10,true);
+INSERT INTO subservicio (descripcion, monto, servicio_id) VALUES 
+('Pequeña', 25.00, 10),
+('Mediana', 35.00, 10),
+('Grande', 50.00, 10);
 
 -- Cortinas
-INSERT INTO subservicio (descripcion, monto, servicio_id,solo_seleccion) VALUES 
-('Pequeña', 15.00, 11,true),
-('Mediana', 20.00, 11,true),
-('Grande', 25.00, 11,true);
+INSERT INTO subservicio (descripcion, monto, servicio_id) VALUES 
+('Pequeña', 15.00, 11),
+('Mediana', 20.00, 11),
+('Grande', 25.00, 11);
 
 
 CREATE TABLE medio_pago (
@@ -177,6 +178,7 @@ CREATE TABLE medio_pago (
     descripcion VARCHAR(255) NOT NULL,
 	enabled BOOLEAN DEFAULT TRUE
 );
+
 INSERT INTO medio_pago (descripcion) VALUES 
 ('EFECTIVO'),
 ('YAPE'),
@@ -208,8 +210,10 @@ CREATE TABLE pago_detalle (
     id INT AUTO_INCREMENT PRIMARY KEY,
 	pago_id INT NOT NULL,
     cantidad INT NOT NULL,
+    monto DECIMAL(10, 2) NOT NULL,
+    tipo char(1) NOT NULL,
+    detalle_tipo VARCHAR(255) NULL,
     subservicio_id INT NOT NULL,
-	monto DECIMAL(10, 2) NULL,
 	enabled BOOLEAN DEFAULT TRUE,    
  	FOREIGN KEY (pago_id) REFERENCES pago(id),
 	FOREIGN KEY (subservicio_id) REFERENCES subservicio(id)   
@@ -237,28 +241,3 @@ ORDER BY P.fecha_creacion DESC;
 SELECT id cod ,descripcion nombre FROM servicio WHERE enabled=1 ORDER BY cod ASC;
 SELECT id cod ,descripcion nombre FROM subservicio WHERE enabled=1 AND servicio_id=1 ORDER BY cod ASC;
 
-
-
-INSERT INTO pago (
-    codigo, 
-    pagado, 
-    cliente_id, 
-    medio_pago_id, 
-    porcentaje_pago, 
-    monto_pagado_inicial, 
-    monto_total, 
-    usuario_id, 
-    fecha_recojo, 
-    observacion
-) VALUES (
-    ?
-    ?,              
-    ?,             
-    ?,     
-    ?,      
-    ?,  
-    ?,   
-    ?,        
-    ?, 
-    ?
-);

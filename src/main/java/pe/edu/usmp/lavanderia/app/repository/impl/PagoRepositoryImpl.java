@@ -41,7 +41,7 @@ public class PagoRepositoryImpl extends JdbcDaoSupport implements PagoRepository
 
     @Override
     public List<SubserviciosPagoResponse> listarSubservicios(Integer servicioId) {
-        String sql="SELECT id AS cod , descripcion AS nombre, monto,unidad,solo_seleccion FROM subservicio WHERE enabled=1 AND servicio_id=? ORDER BY id ASC";
+        String sql="SELECT id AS cod , descripcion AS nombre, monto,tipo,detalle_tipo,solo_seleccion FROM subservicio WHERE enabled=1 AND servicio_id=? ORDER BY id ASC";
         return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(SubserviciosPagoResponse.class),servicioId);
     }
 

@@ -5,7 +5,8 @@ public class SubservicioResponse {
     private String descripcion;
     private double monto;
     private int servicioId;
-    private String unidad;
+    private String tipo;
+    private String detalleTipo;
     private Boolean soloSeleccion;
     private Boolean enabled;
 
@@ -41,12 +42,20 @@ public class SubservicioResponse {
         this.servicioId = servicioId;
     }
 
-    public String getUnidad() {
-        return unidad;
+    public String getTipo() {
+        return tipo;
     }
 
-    public void setUnidad(String unidad) {
-        this.unidad = unidad;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public String getDetalleTipo() {
+        return detalleTipo;
+    }
+
+    public void setDetalleTipo(String detalleTipo) {
+        this.detalleTipo = detalleTipo;
     }
 
     public Boolean getSoloSeleccion() {
