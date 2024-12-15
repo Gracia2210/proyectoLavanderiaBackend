@@ -1,42 +1,49 @@
 package pe.edu.usmp.lavanderia.app.response;
 
 public class ListaClientePagoResponse {
-    private Integer id;
-    private Integer codigo;
-    private String estado;
+    private Long id;
+    private String codigo;
+    private boolean pagado;
+    private boolean entregado;
     private String cliente;
     private String medioPago;
-    private Double porcentajePago;
-    private Double montoPagadoInicial;
-    private Double montoTotal;
+    private double porcentajePago;
+    private double montoPagadoInicial;
+    private double montoTotal;
     private String usuario;
     private String fechaCreacion;
     private String fechaEntrega;
-    private String direccion;
-    private String observacion;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Integer getCodigo() {
+    public String getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(Integer codigo) {
+    public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
 
-    public String getEstado() {
-        return estado;
+    public boolean isPagado() {
+        return pagado;
     }
 
-    public void setEstado(String estado) {
-        this.estado = estado;
+    public void setPagado(boolean pagado) {
+        this.pagado = pagado;
+    }
+
+    public boolean isEntregado() {
+        return entregado;
+    }
+
+    public void setEntregado(boolean entregado) {
+        this.entregado = entregado;
     }
 
     public String getCliente() {
@@ -55,27 +62,27 @@ public class ListaClientePagoResponse {
         this.medioPago = medioPago;
     }
 
-    public Double getPorcentajePago() {
+    public double getPorcentajePago() {
         return porcentajePago;
     }
 
-    public void setPorcentajePago(Double porcentajePago) {
+    public void setPorcentajePago(double porcentajePago) {
         this.porcentajePago = porcentajePago;
     }
 
-    public Double getMontoPagadoInicial() {
+    public double getMontoPagadoInicial() {
         return montoPagadoInicial;
     }
 
-    public void setMontoPagadoInicial(Double montoPagadoInicial) {
+    public void setMontoPagadoInicial(double montoPagadoInicial) {
         this.montoPagadoInicial = montoPagadoInicial;
     }
 
-    public Double getMontoTotal() {
+    public double getMontoTotal() {
         return montoTotal;
     }
 
-    public void setMontoTotal(Double montoTotal) {
+    public void setMontoTotal(double montoTotal) {
         this.montoTotal = montoTotal;
     }
 
@@ -101,21 +108,5 @@ public class ListaClientePagoResponse {
 
     public void setFechaEntrega(String fechaEntrega) {
         this.fechaEntrega = fechaEntrega;
-    }
-
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
-
-    public String getObservacion() {
-        return observacion;
-    }
-
-    public void setObservacion(String observacion) {
-        this.observacion = observacion;
     }
 }

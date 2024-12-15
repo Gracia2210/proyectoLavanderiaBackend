@@ -46,4 +46,9 @@ public class PagoServiceImpl implements PagoService {
     public List<SubserviciosPagoResponse> listarSubservicios(Integer servicioId) {
         return pagoRepository.listarSubservicios(servicioId);
     }
+
+    @Override
+    public List<CodNombreResponse> listarMedioPagos() {
+        return pagoRepository.listarMedioPagos();
+    }
 }

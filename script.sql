@@ -180,22 +180,23 @@ CREATE TABLE medio_pago (
 INSERT INTO medio_pago (descripcion) VALUES 
 ('EFECTIVO'),
 ('YAPE'),
-('TARJETA'),
-('PLIN');
+('PLIN'),
+('TARJETA DÉBITO'),
+('TARJETA DE CRÉDITO');
 
 CREATE TABLE pago (
     id INT AUTO_INCREMENT PRIMARY KEY,
     codigo VARCHAR(255) NOT NULL,
-    estado char(1) NOT NULL,
+	pagado BOOLEAN DEFAULT FALSE,
+	entregado BOOLEAN DEFAULT FALSE,
     cliente_id INT NOT NULL,
     medio_pago_id INT,
-    porcentaje_pago INT NOT NULL,
+	porcentaje_pago DECIMAL(10, 2) NULL,
     monto_pagado_inicial  DECIMAL(10, 2) NOT NULL,
     monto_total DECIMAL(10, 2) NULL,
     usuario_id INT NOT NULL,
+	fecha_recojo TIMESTAMP NOT NULL,
     fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	fecha_entrega TIMESTAMP NULL,
-	direccion TEXT NULL,
     observacion TEXT NULL,
 	enabled BOOLEAN DEFAULT TRUE,
 	FOREIGN KEY (medio_pago_id) REFERENCES medio_pago(id),
@@ -215,24 +216,22 @@ CREATE TABLE pago_detalle (
 );
 
 SELECT p.id, p.codigo,
-CASE p.estado
-WHEN '1' THEN 'PENDIENTE'
-ELSE 'PAGADO'
-END AS estado,
+ p.pagado,
+ p.entregado,
 CONCAT(c.apellido_paterno, ' ', c.apellido_materno, '' ,c.nombre) AS cliente,
-mp.descripcion,p.porcentaje_pago,p.monto_pagado_inicial,
+mp.descripcion mediio_pago,
+p.porcentaje_pago,
+p.monto_pagado_inicial,
 p.monto_total,
 CONCAT(pe.apellido_paterno, ' ',pe.apellido_materno, '' ,pe.nombre) AS usuario,
 DATE_FORMAT(p.fecha_creacion, '%d/%m/%Y %H:%i:%s') AS fecha_creacion,
-DATE_FORMAT(p.fecha_entrega, '%d/%m/%Y %H:%i:%s') AS fecha_entrega,
-p.direccion,
-p.observacion
+DATE_FORMAT(p.fecha_recojo, '%d/%m/%Y') AS fecha_entrega
  FROM pago p
 INNER JOIN cliente c on p.cliente_id=c.id
 INNER JOIN medio_pago mp on p.medio_pago_id=mp.id
 INNER JOIN usuario u on p.usuario_id=u.id
 INNER JOIN persona pe on u.id=pe.id_usuario
-WHERE c.id=1 AND p.estado='1'
+WHERE c.id=1 AND p.entregado=FALSE and p.enabled=true
 ORDER BY P.fecha_creacion DESC;
 
 SELECT id cod ,descripcion nombre FROM servicio WHERE enabled=1 ORDER BY cod ASC;
@@ -240,4 +239,26 @@ SELECT id cod ,descripcion nombre FROM subservicio WHERE enabled=1 AND servicio_
 
 
 
-
+INSERT INTO pago (
+    codigo, 
+    pagado, 
+    cliente_id, 
+    medio_pago_id, 
+    porcentaje_pago, 
+    monto_pagado_inicial, 
+    monto_total, 
+    usuario_id, 
+    fecha_recojo, 
+    observacion
+) VALUES (
+    ?
+    ?,              
+    ?,             
+    ?,     
+    ?,      
+    ?,  
+    ?,   
+    ?,        
+    ?, 
+    ?
+);

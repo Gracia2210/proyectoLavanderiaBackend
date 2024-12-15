@@ -31,4 +31,8 @@ public class PagoController {
     public List<SubserviciosPagoResponse> listarSubservicios(@RequestParam Integer servicioId) {
         return pagoService.listarSubservicios(servicioId);
     }
+    @RequestMapping(value = "listarMedioPagos", method = RequestMethod.GET)
+    public List<CodNombreResponse> listarMedioPagos() {
+        return pagoService.listarMedioPagos();
+    }
 }
