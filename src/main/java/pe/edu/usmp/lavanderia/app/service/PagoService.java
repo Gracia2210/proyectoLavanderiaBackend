@@ -1,7 +1,5 @@
 package pe.edu.usmp.lavanderia.app.service;
 
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.web.bind.annotation.RequestParam;
 import pe.edu.usmp.lavanderia.app.request.OrdenPagoRequest;
 import pe.edu.usmp.lavanderia.app.response.*;
 
@@ -13,7 +11,7 @@ public interface PagoService {
     List<SubserviciosPagoResponse> listarSubservicios(Integer servicioId);
     List<CodNombreResponse> listarMedioPagos();
     ModelResponse<String> generarBoleta(OrdenPagoRequest request);
-    ModelResponse<OrdenPagoEditResponse> obtenerPagoEdit(@RequestParam Integer pago);
+    ModelResponse<OrdenPagoEditResponse> obtenerPagoEdit(Integer pago);
     MsgResponse edicionBoleta(OrdenPagoRequest request);
-
+    ModelResponse<String> imprimirBoleta(Integer pago) throws Exception;
 }

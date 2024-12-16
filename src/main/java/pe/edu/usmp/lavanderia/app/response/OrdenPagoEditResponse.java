@@ -8,12 +8,18 @@ public class OrdenPagoEditResponse {
     private boolean pagado;
     private boolean entregado;
     private double medioPagoId;
+    private String medioPago;
     private double porcentajePago;
     private double montoPagadoInicial;
     private double montoTotal;
     private String fechaEntrega;
     private String fechaCreacion;
     private String observacion;
+    private String pagadoTexto;
+    private String entregadoTexto;
+    private String cliente;
+    private String usuario;
+    private String telefono;
     private List<ServicioPagoEditResponse> pago;
 
     public int getId() {
@@ -110,5 +116,53 @@ public class OrdenPagoEditResponse {
 
     public void setPago(List<ServicioPagoEditResponse> pago) {
         this.pago = pago;
+    }
+
+    public String getMedioPago() {
+        return medioPago;
+    }
+
+    public void setMedioPago(String medioPago) {
+        this.medioPago = medioPago;
+    }
+
+    public String getPagadoTexto() {
+        return pagadoTexto;
+    }
+
+    public void setPagadoTexto(String pagadoTexto) {
+        this.pagadoTexto = pagadoTexto;
+    }
+
+    public String getEntregadoTexto() {
+        return entregadoTexto;
+    }
+
+    public void setEntregadoTexto(String entregadoTexto) {
+        this.entregadoTexto = entregadoTexto;
+    }
+
+    public String getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(String cliente) {
+        this.cliente = cliente;
+    }
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
 }

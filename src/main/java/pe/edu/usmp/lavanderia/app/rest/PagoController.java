@@ -1,5 +1,7 @@
 package pe.edu.usmp.lavanderia.app.rest;
 
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.usmp.lavanderia.app.request.OrdenPagoRequest;
 import pe.edu.usmp.lavanderia.app.response.*;
@@ -44,5 +46,9 @@ public class PagoController {
     @RequestMapping(value = "edicionBoleta", method = RequestMethod.POST)
     MsgResponse edicionBoleta(@RequestBody OrdenPagoRequest request){
         return pagoService.edicionBoleta(request);
+    }
+    @RequestMapping(value = "imprimirBoleta", method = RequestMethod.GET)
+    public ModelResponse<String> imprimirBoleta(@RequestParam Integer pago) throws Exception {
+        return pagoService.imprimirBoleta(pago);
     }
 }

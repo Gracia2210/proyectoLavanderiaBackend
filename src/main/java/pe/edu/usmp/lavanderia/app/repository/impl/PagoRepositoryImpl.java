@@ -186,4 +186,60 @@ public class PagoRepositoryImpl extends JdbcDaoSupport implements PagoRepository
     public void eliminarDetalleTable(Integer pago) {
         jdbcTemplate.update( "DELETE FROM pago_detalle WHERE pago_id = ?", pago);
     }
+
+    @Override
+    public OrdenPagoEditResponse imprimirBoleta(Integer pago) {
+        String pagoQuery = "SELECT " +
+                "p.id, " +
+                "p.codigo, " +
+                "CASE " +
+                "    WHEN p.pagado = TRUE THEN 'PAGADO' " +
+                "    ELSE 'PENDIENTE DE PAGO' " +
+                "END AS pagadoTexto, " +
+                "CASE " +
+                "    WHEN p.entregado = TRUE THEN 'SI' " +
+                "    ELSE 'NO' " +
+                "END AS entregadoTexto, " +
+                "CONCAT(c.apellido_paterno, ' ', c.apellido_materno, ' ', c.nombre) AS cliente, " +
+                "mp.descripcion AS medio_pago, " +
+                "p.monto_pagado_inicial AS montoPagadoInicial, " +
+                "p.monto_total AS montoTotal,p.observacion, " +
+                "CONCAT(pe.apellido_paterno, ' ', pe.apellido_materno, ' ', pe.nombre) AS usuario, " +
+                "DATE_FORMAT(p.fecha_creacion, '%d/%m/%Y %H:%i:%s') AS fecha_creacion, " +
+                "DATE_FORMAT(p.fecha_recojo, '%d/%m/%Y') AS fecha_entrega, " +
+                "pe.telefono " +
+                "FROM pago p " +
+                "INNER JOIN cliente c ON p.cliente_id = c.id " +
+                "INNER JOIN medio_pago mp ON p.medio_pago_id = mp.id " +
+                "INNER JOIN usuario u ON p.usuario_id = u.id " +
+                "INNER JOIN persona pe ON u.id = pe.id_usuario " +
+                "WHERE p.id = ? AND p.entregado = FALSE AND p.enabled = TRUE";
+
+        String detalleQuery = " SELECT d.subservicio_id cod," +
+                " CONCAT(s.descripcion,' / ',sub.descripcion) AS nombre," +
+                " d.solo_seleccion," +
+                " d.tipo," +
+                " d.detalle_tipo," +
+                " d.monto," +
+                " d.cantidad," +
+                " d.monto_total" +
+                " FROM pago_detalle d" +
+                " INNER JOIN subservicio sub ON d.subservicio_id=sub.id" +
+                " INNER JOIN servicio s ON sub.servicio_id=s.id" +
+                " WHERE d.pago_id=? AND D.enabled=true ORDER BY d.id ASC";
+
+        OrdenPagoEditResponse ordenPago = jdbcTemplate.queryForObject(
+                pagoQuery,
+                BeanPropertyRowMapper.newInstance(OrdenPagoEditResponse.class),
+                pago
+        );
+
+        List<ServicioPagoEditResponse> detalles = jdbcTemplate.query(
+                detalleQuery,
+                BeanPropertyRowMapper.newInstance(ServicioPagoEditResponse.class),
+                pago
+        );
+        ordenPago.setPago(detalles);
+        return ordenPago;
+    }
 }

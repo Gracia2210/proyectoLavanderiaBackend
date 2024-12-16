@@ -286,4 +286,23 @@ SELECT p.id,p.codigo,p.pagado,p.entregado,p.medio_pago_id,p.porcentaje_pago,
  WHERE d.pago_id=3 AND D.enabled=true;
 
  
+SELECT p.id, p.codigo,
+CASE 
+        WHEN p.pagado = TRUE THEN 'PAGADO'
+        ELSE 'PENDIENTE DE PAGO'
+    END AS pagado,
+CASE 
+        WHEN p.entregado = TRUE THEN 'SI'
+        ELSE 'NO'
+    END AS entregado,
+ CONCAT(c.apellido_paterno, ' ', c.apellido_materno, ' ' ,c.nombre) AS cliente, 
+ mp.descripcion AS medio_pago, p.monto_pagado_inicial,
+ p.monto_total, CONCAT(pe.apellido_paterno, ' ',pe.apellido_materno, ' ' ,pe.nombre) 
+ AS usuario, DATE_FORMAT(p.fecha_creacion, '%d/%m/%Y %H:%i:%s') AS fecha_creacion, 
+ DATE_FORMAT(p.fecha_recojo, '%d/%m/%Y') AS fecha_entrega,pe.telefono
+ FROM pago p 
+ INNER JOIN cliente c on p.cliente_id=c.id INNER JOIN medio_pago mp on p.medio_pago_id=mp.id
+ INNER JOIN usuario u on p.usuario_id=u.id INNER JOIN persona pe on u.id=pe.id_usuario
+ WHERE p.id=1 AND p.entregado=FALSE 
+AND p.enabled=true
 
