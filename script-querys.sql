@@ -1,98 +1,67 @@
-----------LISTA POR CATEGORIA
-SELECT p.id AS id_persona, CONCAT(p.apellido_paterno, ' ', p.apellido_materno,' ',p.nombre) AS nombre,
-       ca.id AS id_categoria,
-       ca.nombre AS categoria,
-       COUNT(*) AS total_consultas,
-       DATE_FORMAT(MAX(c.fecha_creacion), '%d/%m/%Y %H:%i:%s') AS ultima_fecha
-FROM consultas c
-         INNER JOIN persona p ON c.id_persona = p.id
-         INNER JOIN categoria ca ON c.id_categoria = ca.id
-WHERE p.id=3 AND ca.id=1
-GROUP BY id_persona,nombre,id_categoria, categoria
-ORDER BY nombre ASC;
+SELECT p.id, p.codigo,
+       p.pagado,
+       p.entregado,
+       CONCAT(c.apellido_paterno, ' ', c.apellido_materno, '' ,c.nombre) AS cliente,
+       mp.descripcion mediio_pago,
+       p.porcentaje_pago,
+       p.monto_pagado_inicial,
+       p.monto_total,
+       CONCAT(pe.apellido_paterno, ' ',pe.apellido_materno, '' ,pe.nombre) AS usuario,
+       DATE_FORMAT(p.fecha_creacion, '%d/%m/%Y %H:%i:%s') AS fecha_creacion,
+       DATE_FORMAT(p.fecha_recojo, '%d/%m/%Y') AS fecha_entrega
+FROM pago p
+         INNER JOIN cliente c on p.cliente_id=c.id
+         INNER JOIN medio_pago mp on p.medio_pago_id=mp.id
+         INNER JOIN usuario u on p.usuario_id=u.id
+         INNER JOIN persona pe on u.id=pe.id_usuario
+WHERE c.id=4 AND p.entregado=FALSE and p.enabled=true
+ORDER BY P.fecha_creacion DESC;
+
+SELECT id cod ,descripcion nombre FROM servicio WHERE enabled=1 ORDER BY cod ASC;
+SELECT id cod ,descripcion nombre FROM subservicio WHERE enabled=1 AND servicio_id=1 ORDER BY cod ASC;
+
+SELECT p.id,p.codigo,p.pagado,p.entregado,p.medio_pago_id,p.porcentaje_pago,
+       p.monto_pagado_inicial,
+       p.monto_total,
+       DATE_FORMAT(p.fecha_recojo, '%Y-%m-%d') AS fecha_entrega,
+       DATE_FORMAT(p.fecha_creacion, '%d/%m/%Y %H:%i:%s') AS fecha_creacion,
+       p.observacion
+FROM pago p WHERE p.id=3 AND p.enabled=true;
+
+SELECT d.cantidad,d.monto,d.monto_total,d.tipo,d.detalle_tipo,d.subservicio_id FROM pago_detalle d
+WHERE d.pago_id=3 AND D.enabled=true;
+
+SELECT d.subservicio_id cod,
+       CONCAT(s.descripcion,' / ',sub.descripcion) AS nombre,
+       d.solo_seleccion,
+       d.tipo,
+       d.detalle_tipo,
+       d.monto,
+       d.cantidad,
+       d.monto_total
+FROM pago_detalle d
+         INNER JOIN subservicio sub ON d.subservicio_id=sub.id
+         INNER JOIN servicio s ON sub.servicio_id=s.id
+WHERE d.pago_id=3 AND D.enabled=true;
 
 
---LISTA POR CATEGORIA DETALLE
+SELECT p.id, p.codigo,
+       CASE
+           WHEN p.pagado = TRUE THEN 'PAGADO'
+           ELSE 'PENDIENTE DE PAGO'
+           END AS pagado,
+       CASE
+           WHEN p.entregado = TRUE THEN 'SI'
+           ELSE 'NO'
+           END AS entregado,
+       CONCAT(c.apellido_paterno, ' ', c.apellido_materno, ' ' ,c.nombre) AS cliente,
+       mp.descripcion AS medio_pago, p.monto_pagado_inicial,
+       p.monto_total, CONCAT(pe.apellido_paterno, ' ',pe.apellido_materno, ' ' ,pe.nombre)
+           AS usuario, DATE_FORMAT(p.fecha_creacion, '%d/%m/%Y %H:%i:%s') AS fecha_creacion,
+       DATE_FORMAT(p.fecha_recojo, '%d/%m/%Y') AS fecha_entrega,c.telefono
+FROM pago p
+         INNER JOIN cliente c on p.cliente_id=c.id INNER JOIN medio_pago mp on p.medio_pago_id=mp.id
+         INNER JOIN usuario u on p.usuario_id=u.id INNER JOIN persona pe on u.id=pe.id_usuario
+WHERE p.id=1 AND p.entregado=FALSE
+  AND p.enabled=true
 
-SELECT CONCAT(p.apellido_paterno, ' ', p.apellido_materno,' ',p.nombre) AS nombre,
-       ca.nombre AS categoria,
-       c.msj_persona pregunta,
-       c.msj_bot respuesta,
-       DATE_FORMAT(c.fecha_creacion, '%d/%m/%Y %H:%i:%s') AS fecha
-FROM consultas c
-         INNER JOIN persona p ON c.id_persona = p.id
-         INNER JOIN categoria ca ON c.id_categoria = ca.id
-WHERE p.id=3 AND ca.id=1
-ORDER BY fecha,pregunta ASC;
-
---LISTA DE ESTUDIANTES
-
-SELECT p.id codigo,
-       CONCAT(p.apellido_paterno, ' ', p.apellido_materno,' ',p.nombre) AS cod
-FROM persona p
-         INNER JOIN usuario u ON p.id_usuario=u.id
-         INNER JOIN usuario_rol ur ON u.id=ur.usuario_id
-WHERE ur.rol_id=1
-ORDER BY nombre ASC;
-
---LISTA DE CATEGORIAS
-SELECT id cod,nombre FROM categoria ORDER BY id asc;
-
----------SCRIPTS DASHBOARD
-
-
-
-
-SELECT ca.id, ca.nombre as name, COUNT(*) as y , false as sliced
-FROM consultas c
-         INNER JOIN categoria ca ON c.id_categoria = ca.id
-WHERE c.fecha_creacion BETWEEN '2024-01-01 00:00:00' AND '2024-12-31 23:59:59'
-GROUP BY ca.id, ca.nombre ORDER BY Y DESC;
-
-
-SELECT DATE_FORMAT(fecha_creacion, '%d/%m/%Y') AS dias, COUNT(*) AS consultas
-FROM consultas
-WHERE fecha_creacion BETWEEN '2024-01-01 00:00:00' AND '2024-12-31 23:59:59'
-GROUP BY dias
-ORDER BY consultas DESC
-    LIMIT 10;
-
-
-
-SELECT
-    MONTH(fecha_creacion) AS nro,
-    CONCAT(DATE_FORMAT(fecha_creacion, '%M'), ' ', YEAR(fecha_creacion)) AS mes,
-    COUNT(*) AS consultas
-FROM consultas
-WHERE fecha_creacion BETWEEN '2024-01-01 00:00:00' AND '2024-12-31 23:59:59'
-GROUP BY nro, mes
-ORDER BY nro
-    LIMIT 12;
-
-
-SELECT ca.id, ca.nombre as name, COUNT(*) as y
-FROM consultas c
-         INNER JOIN categoria ca ON c.id_categoria = ca.id
-WHERE c.fecha_creacion BETWEEN '2024-01-01 00:00:00' AND '2024-12-31 23:59:59'
-GROUP BY ca.id, ca.nombre ORDER BY Y DESC;
-
-
-SELECT p.id , CONCAT(p.apellido_paterno, ' ', p.apellido_materno,' ',p.nombre) AS nombre,
-       COUNT(*) AS consultas
-FROM consultas c
-         INNER JOIN persona p ON c.id_persona = p.id
-WHERE c.fecha_creacion BETWEEN '2024-01-01 00:00:00' AND '2024-12-31 23:59:59'
-GROUP BY id_persona
-ORDER BY consultas desc LIMIT 5 ;
-
-
-SELECT
-    ca.id AS id_categoria,
-    ca.nombre AS categoria,
-    COUNT(*) AS consultas
-FROM consultas c
-         INNER JOIN persona p ON c.id_persona = p.id
-         INNER JOIN categoria ca ON c.id_categoria = ca.id
-WHERE p.id=2
-GROUP BY id_categoria, categoria
-ORDER BY consultas ASC;
