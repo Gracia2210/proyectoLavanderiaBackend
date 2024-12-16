@@ -186,8 +186,8 @@ INSERT INTO medio_pago (descripcion) VALUES
 ('TARJETA DÉBITO'),
 ('TARJETA DE CRÉDITO');
 
-DROP TABLE PAGO;
-DROP TABLE PAGO_DETALLE;
+-- DROP TABLE PAGO;
+-- DROP TABLE PAGO_DETALLE;
 CREATE TABLE pago (
     id INT AUTO_INCREMENT PRIMARY KEY,
     codigo VARCHAR(255) NOT NULL,
@@ -236,6 +236,21 @@ CREATE TABLE contador_secuencia (
 );
 INSERT INTO contador_secuencia (valor_actual)
 VALUES (1);
+
+CREATE TABLE configuracion_sistema (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(255) NULL,
+    descripcion VARCHAR(255) NULL,
+    direccion VARCHAR(255) NULL,
+    telefono VARCHAR(20) NULL,
+    imagen LONGBLOB  NULL,
+    nombre_imagen VARCHAR(150) NULL,
+    tipo_imagen VARCHAR(10) NULL
+);
+
+INSERT INTO configuracion_sistema
+(nombre,descripcion,direccion,telefono)
+VALUES('SOFTCLEAN','Laundry Service','Calle Alberto Montellanos 157 - La Victoria','2426452');
 
 --------------------------------------------
 

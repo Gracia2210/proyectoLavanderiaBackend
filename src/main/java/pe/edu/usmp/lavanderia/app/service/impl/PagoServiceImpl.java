@@ -15,6 +15,7 @@ import pe.edu.usmp.lavanderia.app.repository.PagoRepository;
 import pe.edu.usmp.lavanderia.app.request.OrdenPagoRequest;
 import pe.edu.usmp.lavanderia.app.request.ServicioPagoRequest;
 import pe.edu.usmp.lavanderia.app.response.*;
+import pe.edu.usmp.lavanderia.app.service.ConfiguracionService;
 import pe.edu.usmp.lavanderia.app.service.PagoService;
 import pe.edu.usmp.lavanderia.app.utils.Constantes;
 import pe.edu.usmp.lavanderia.app.utils.UtilResource;
@@ -29,9 +30,11 @@ import java.util.Map;
 @Service
 public class PagoServiceImpl implements PagoService {
     private final PagoRepository pagoRepository;
+    private final ConfiguracionService configuracionService;
 
-    public PagoServiceImpl(PagoRepository pagoRepository) {
+    public PagoServiceImpl(PagoRepository pagoRepository,ConfiguracionService configuracionService) {
         this.pagoRepository = pagoRepository;
+        this.configuracionService = configuracionService;
     }
 
     @Override
@@ -146,18 +149,28 @@ public class PagoServiceImpl implements PagoService {
             HashMap<String, Object> mapParametros = new HashMap<>();
             String logoBase64 = Base64.getEncoder()
                     .encodeToString(IOUtils.toByteArray(getClass().getResourceAsStream("/static/images/logo.png")));
-            mapParametros.put("logo", logoBase64);
+
+            ConfiguracionGlobalResponse config= configuracionService.configuracionGlobal();
+
+            mapParametros.put("logo",config.getImagen()!=null?Base64.getEncoder().encodeToString(config.getImagen()): logoBase64);
             mapParametros.put("codigo", data.getCodigo());
             mapParametros.put("fechaCreacion",data.getFechaCreacion());
             mapParametros.put("fechaEntrega", data.getFechaEntrega());
             mapParametros.put("medioPago", data.getMedioPago());
             mapParametros.put("cliente", data.getCliente());
             mapParametros.put("telefono", data.getTelefono());
-            mapParametros.put("montoTotal", data.getMontoTotal());
-            mapParametros.put("montoPagadoInicial", data.getMontoPagadoInicial());
+            mapParametros.put("montoTotal",UtilResource.formatToSoles(data.getMontoTotal()));
+            mapParametros.put("montoPagadoInicial",UtilResource.formatToSoles(data.getMontoPagadoInicial()));
             mapParametros.put("pagado", data.getPagadoTexto());
             mapParametros.put("entregado", data.getEntregadoTexto());
             mapParametros.put("observacion", data.getObservacion());
+            mapParametros.put("nombreEmpresa", config.getNombre());
+            mapParametros.put("direccionEmpresa", config.getDireccion());
+            mapParametros.put("telefonoEmpresa", config.getTelefono());
+            mapParametros.put("saldoRestante", UtilResource.formatToSoles(data.getMontoTotal()-data.getMontoPagadoInicial()));
+            for(ServicioPagoEditResponse item:data.getPago()){
+                item.setMontoTotalText(UtilResource.formatToSoles(item.getMontoTotal()));
+            }
             List<Map<String, Object>> listDataMap = UtilResource.convertirDtoAMap(data.getPago());
             InputStream jrxmlStream = new ClassPathResource("/static/boletaPago.jrxml").getInputStream();
             JasperReport jasperReport = JasperCompileManager.compileReport(jrxmlStream);

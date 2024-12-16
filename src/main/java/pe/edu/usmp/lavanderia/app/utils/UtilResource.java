@@ -1,6 +1,7 @@
 package pe.edu.usmp.lavanderia.app.utils;
 
 import java.lang.reflect.Field;
+import java.text.NumberFormat;
 import java.util.*;
 
 public class UtilResource {
@@ -54,6 +55,10 @@ public class UtilResource {
         }
 
         return listaMapas;
+    }
+    public static String formatToSoles(double amount) {
+        NumberFormat formatter = NumberFormat.getCurrencyInstance(new Locale("es", "PE"));
+        return formatter.format(amount);
     }
 
 }

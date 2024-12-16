@@ -21,18 +21,22 @@
 	<parameter name="medioPago" class="java.lang.String"/>
 	<parameter name="cliente" class="java.lang.String"/>
 	<parameter name="telefono" class="java.lang.String"/>
-	<parameter name="montoTotal" class="java.lang.Double"/>
-	<parameter name="montoPagadoInicial" class="java.lang.Double"/>
+	<parameter name="montoTotal" class="java.lang.String"/>
+	<parameter name="montoPagadoInicial" class="java.lang.String"/>
 	<parameter name="pagado" class="java.lang.String"/>
 	<parameter name="entregado" class="java.lang.String"/>
 	<parameter name="observacion" class="java.lang.String"/>
+	<parameter name="nombreEmpresa" class="java.lang.String"/>
+	<parameter name="direccionEmpresa" class="java.lang.String"/>
+	<parameter name="telefonoEmpresa" class="java.lang.String"/>
+	<parameter name="saldoRestante" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
 	<field name="nombre" class="java.lang.String"/>
 	<field name="cantidad" class="java.lang.Integer"/>
 	<field name="detalleTipo" class="java.lang.String"/>
-	<field name="montoTotal" class="java.lang.Double"/>
+	<field name="montoTotalText" class="java.lang.String"/>
 	<title>
 		<band height="61" splitType="Stretch">
 			<staticText>
@@ -52,17 +56,6 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$P{fechaCreacion}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="-5" y="9" width="75" height="11" uuid="bd40a852-09d6-40dc-901e-92e63ce74797">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-				</reportElement>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font size="4" isBold="false"/>
-				</textElement>
-				<text><![CDATA[Av Lima Cuadra 12 - Ate
-Teléfono: 2426452]]></text>
-			</staticText>
 			<staticText>
 				<reportElement x="100" y="36" width="40" height="10" uuid="872f61f0-9a5a-49a4-9014-8add9c6eb46e">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
@@ -131,16 +124,6 @@ Teléfono: 2426452]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{medioPago}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="14" y="-13" width="55" height="20" uuid="69d220f7-b1b9-4d0c-8599-49647c68b48e">
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-				</reportElement>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font size="8" isBold="true"/>
-				</textElement>
-				<text><![CDATA[SOFTCLEAN]]></text>
-			</staticText>
 			<image scaleImage="RetainShape" onErrorType="Icon">
 				<reportElement positionType="FixRelativeToBottom" x="-11" y="-13" width="25" height="20" uuid="7fe0fb0b-242d-4425-b2be-9557204054bc"/>
 				<imageExpression><![CDATA[new ByteArrayInputStream(Base64.getDecoder().decode($P{logo}.getBytes()))]]></imageExpression>
@@ -173,6 +156,20 @@ Teléfono: 2426452]]></text>
 				</textElement>
 				<text><![CDATA[Número de Boleta]]></text>
 			</staticText>
+			<textField textAdjust="ScaleFont">
+				<reportElement x="14" y="-13" width="126" height="20" uuid="78cb7357-86b5-4f7f-8dd0-bfbe18ebef25"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{nombreEmpresa}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="ScaleFont">
+				<reportElement x="-5" y="9" width="90" height="26" uuid="019542f3-7f8e-4381-bc96-0bbd6e474c99"/>
+				<textElement verticalAlignment="Top">
+					<font size="4" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{direccionEmpresa}+ "\nTeléfono: " +$P{telefonoEmpresa}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>
@@ -273,7 +270,7 @@ Teléfono: 2426452]]></text>
 				<textElement textAlignment="Right" verticalAlignment="Bottom">
 					<font size="4"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{montoTotal}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{montoTotalText}]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="ScaleFont" isBlankWhenNull="true">
 				<reportElement x="110" y="0" width="36" height="15" uuid="e701de5c-82c7-48ab-b619-a48659ed4a9f"/>
@@ -288,7 +285,7 @@ Teléfono: 2426452]]></text>
 		</band>
 	</detail>
 	<pageFooter>
-		<band height="80" splitType="Stretch">
+		<band height="95" splitType="Stretch">
 			<printWhenExpression><![CDATA[!$P{IS_EXCEL_EXPORT}]]></printWhenExpression>
 			<staticText>
 				<reportElement x="-12" y="6" width="102" height="9" uuid="c0fe1949-3742-4bce-b5fd-d4b030943d53">
@@ -306,7 +303,7 @@ Teléfono: 2426452]]></text>
 				<text><![CDATA[Observaciones:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="-12" y="15" width="102" height="30" uuid="b29a5e99-b37f-48a5-a066-e8478eea36b7"/>
+				<reportElement x="-12" y="15" width="102" height="40" uuid="b29a5e99-b37f-48a5-a066-e8478eea36b7"/>
 				<box topPadding="1" leftPadding="3" bottomPadding="1" rightPadding="3">
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -314,7 +311,7 @@ Teléfono: 2426452]]></text>
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement verticalAlignment="Top">
-					<font size="3" isBold="true"/>
+					<font size="4" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{observacion}]]></textFieldExpression>
 			</textField>
@@ -425,7 +422,7 @@ Teléfono: 2426452]]></text>
 				<textFieldExpression><![CDATA[$P{entregado}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="-12" y="45" width="202" height="35" uuid="79086629-38d2-4dbc-8108-3612be7ef02a">
+				<reportElement x="-13" y="60" width="202" height="35" uuid="79086629-38d2-4dbc-8108-3612be7ef02a">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -434,6 +431,33 @@ Teléfono: 2426452]]></text>
 				</textElement>
 				<text><![CDATA[El cliente cuenta con un plazo de 5 días para realizar cualquier reclamo o solicitud de devolución del servicio contratado; las prendas pasan por una revisión exhaustiva antes del proceso de lavado, y en caso de encontrarse algún daño o desperfecto previo, se notificará de inmediato al número de contacto proporcionado al momento del registro. Cabe recordar que, si una prenda no puede ser lavada por causas imputables al cliente o si el pago del servicio no es completado, se aplicarán las penalidades correspondientes conforme a nuestros términos de servicio]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="100" y="45" width="40" height="10" uuid="a5aafbde-4c98-42ef-8a97-2c2513a0a269">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box leftPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="4"/>
+				</textElement>
+				<text><![CDATA[Saldo restante]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="140" y="45" width="50" height="10" uuid="a6e4c57e-0afe-4625-9a46-bac9317360a5"/>
+				<box rightPadding="2">
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="4" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{saldoRestante}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageFooter>
 </jasperReport>

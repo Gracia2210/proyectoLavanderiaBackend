@@ -9,6 +9,7 @@ public class ServicioPagoEditResponse {
     private double monto;
     private int cantidad;
     private double montoTotal;
+    private String montoTotalText;
 
     public Integer getCod() {
         return cod;
@@ -72,5 +73,13 @@ public class ServicioPagoEditResponse {
 
     public void setMontoTotal(double montoTotal) {
         this.montoTotal = montoTotal;
+    }
+
+    public String getMontoTotalText() {
+        return montoTotalText;
+    }
+
+    public void setMontoTotalText(String montoTotalText) {
+        this.montoTotalText = montoTotalText;
     }
 }
