@@ -1,10 +1,9 @@
 package pe.edu.usmp.lavanderia.app.service;
 
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import pe.edu.usmp.lavanderia.app.response.CodNombreResponse;
-import pe.edu.usmp.lavanderia.app.response.ListModelResponse;
-import pe.edu.usmp.lavanderia.app.response.ListaClientePagoResponse;
-import pe.edu.usmp.lavanderia.app.response.SubserviciosPagoResponse;
+import org.springframework.web.bind.annotation.RequestParam;
+import pe.edu.usmp.lavanderia.app.request.OrdenPagoRequest;
+import pe.edu.usmp.lavanderia.app.response.*;
 
 import java.util.List;
 
@@ -13,4 +12,8 @@ public interface PagoService {
     List<CodNombreResponse> listarServicios();
     List<SubserviciosPagoResponse> listarSubservicios(Integer servicioId);
     List<CodNombreResponse> listarMedioPagos();
+    ModelResponse<String> generarBoleta(OrdenPagoRequest request);
+    ModelResponse<OrdenPagoEditResponse> obtenerPagoEdit(@RequestParam Integer pago);
+    MsgResponse edicionBoleta(OrdenPagoRequest request);
+
 }

@@ -34,6 +34,8 @@ public class Auth {
 		usuario.setSexo(getOrNull(jsonObj, "sexo"));
 		usuario.setTelefono(getOrNull(jsonObj, "telefono"));
 		usuario.setEmail(getOrNull(jsonObj, "email"));
+		usuario.setIdUsuario(jsonObj.getLong("idUsuario"));
+
 		return usuario;
 	}
 
@@ -48,7 +50,7 @@ public class Auth {
 				.getAdditionalInformation();
 		return details;
 	}
-
+	public Long idUsuario(){return usuario().getIdUsuario();};
 	public Long IdPersona() {
 		return usuario().getIdPersona();
 	}

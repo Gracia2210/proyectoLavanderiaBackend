@@ -13,6 +13,7 @@ public class AuthModel {
 	private String sexo;
 	private String telefono;
 	private String email;
+	private Long idUsuario;
 
 	public Long getIdPersona() {
 		return idPersona;
@@ -84,5 +85,13 @@ public class AuthModel {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public Long getIdUsuario() {
+		return idUsuario;
+	}
+
+	public void setIdUsuario(Long idUsuario) {
+		this.idUsuario = idUsuario;
 	}
 }

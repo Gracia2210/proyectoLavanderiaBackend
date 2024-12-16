@@ -10,6 +10,7 @@ public class Persona {
 	private String email;
 	private String telefono;
 	private String usuario;
+	private Long idUsuario;
 	public Long getId() {
 		return id;
 	}
@@ -54,4 +55,11 @@ public class Persona {
 	}
 	public String getUsuario() {return usuario;}
 	public void setUsuario(String usuario) {this.usuario = usuario;}
+	public Long getIdUsuario() {
+		return idUsuario;
+	}
+
+	public void setIdUsuario(Long idUsuario) {
+		this.idUsuario = idUsuario;
+	}
 }

@@ -1,14 +1,14 @@
 package pe.edu.usmp.lavanderia.app.response;
 
-public class ServicioPagoResponse {
+public class ServicioPagoEditResponse {
     private Integer cod;
     private String nombre;
-    private Boolean soloSeleccion;
+    private boolean soloSeleccion;
     private String tipo;
     private String detalleTipo;
     private double monto;
-    private String cantidad;
-    private String montoTotal;
+    private int cantidad;
+    private double montoTotal;
 
     public Integer getCod() {
         return cod;
@@ -26,16 +26,20 @@ public class ServicioPagoResponse {
         this.nombre = nombre;
     }
 
+    public boolean isSoloSeleccion() {
+        return soloSeleccion;
+    }
+
+    public void setSoloSeleccion(boolean soloSeleccion) {
+        this.soloSeleccion = soloSeleccion;
+    }
+
     public String getTipo() {
         return tipo;
     }
 
-    public Boolean getSoloSeleccion() {
-        return soloSeleccion;
-    }
-
-    public void setSoloSeleccion(Boolean soloSeleccion) {
-        this.soloSeleccion = soloSeleccion;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     public String getDetalleTipo() {
@@ -54,19 +58,19 @@ public class ServicioPagoResponse {
         this.monto = monto;
     }
 
-    public String getCantidad() {
+    public int getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(String cantidad) {
+    public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }
 
-    public String getMontoTotal() {
+    public double getMontoTotal() {
         return montoTotal;
     }
 
-    public void setMontoTotal(String montoTotal) {
+    public void setMontoTotal(double montoTotal) {
         this.montoTotal = montoTotal;
     }
 }

@@ -1,9 +1,7 @@
 package pe.edu.usmp.lavanderia.app.rest;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import pe.edu.usmp.lavanderia.app.request.OrdenPagoRequest;
 import pe.edu.usmp.lavanderia.app.response.*;
 import pe.edu.usmp.lavanderia.app.service.PagoService;
 
@@ -34,5 +32,17 @@ public class PagoController {
     @RequestMapping(value = "listarMedioPagos", method = RequestMethod.GET)
     public List<CodNombreResponse> listarMedioPagos() {
         return pagoService.listarMedioPagos();
+    }
+    @RequestMapping(value = "generarBoleta", method = RequestMethod.POST)
+    public ModelResponse<String> generarBoleta(@RequestBody OrdenPagoRequest request){
+        return pagoService.generarBoleta(request);
+    }
+    @RequestMapping(value = "obtenerPagoEdit", method = RequestMethod.GET)
+    public ModelResponse<OrdenPagoEditResponse> obtenerPagoEdit(@RequestParam Integer pago){
+        return pagoService.obtenerPagoEdit(pago);
+    }
+    @RequestMapping(value = "edicionBoleta", method = RequestMethod.POST)
+    MsgResponse edicionBoleta(@RequestBody OrdenPagoRequest request){
+        return pagoService.edicionBoleta(request);
     }
 }

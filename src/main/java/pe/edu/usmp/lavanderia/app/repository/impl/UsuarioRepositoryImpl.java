@@ -91,6 +91,7 @@ public class UsuarioRepositoryImpl extends JdbcDaoSupport implements UsuarioRepo
 		persona.setSexo(rs.getString("sexo"));
 		persona.setEmail(rs.getString("email"));
 		persona.setTelefono(rs.getString("telefono"));
+		persona.setIdUsuario(rs.getLong("idUsuario"));
 		return persona;
 	}
 }

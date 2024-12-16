@@ -186,6 +186,8 @@ INSERT INTO medio_pago (descripcion) VALUES
 ('TARJETA DÉBITO'),
 ('TARJETA DE CRÉDITO');
 
+DROP TABLE PAGO;
+DROP TABLE PAGO_DETALLE;
 CREATE TABLE pago (
     id INT AUTO_INCREMENT PRIMARY KEY,
     codigo VARCHAR(255) NOT NULL,
@@ -197,7 +199,7 @@ CREATE TABLE pago (
     monto_pagado_inicial  DECIMAL(10, 2) NOT NULL,
     monto_total DECIMAL(10, 2) NULL,
     usuario_id INT NOT NULL,
-	fecha_recojo TIMESTAMP NOT NULL,
+	fecha_recojo DATE NOT NULL,
     fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     observacion TEXT NULL,
 	enabled BOOLEAN DEFAULT TRUE,
@@ -211,13 +213,31 @@ CREATE TABLE pago_detalle (
 	pago_id INT NOT NULL,
     cantidad INT NOT NULL,
     monto DECIMAL(10, 2) NOT NULL,
+    monto_total DECIMAL(10, 2) NOT NULL,
     tipo char(1) NOT NULL,
     detalle_tipo VARCHAR(255) NULL,
     subservicio_id INT NOT NULL,
-	enabled BOOLEAN DEFAULT TRUE,    
+	enabled BOOLEAN DEFAULT TRUE,
+	solo_seleccion  BOOLEAN DEFAULT FALSE,
  	FOREIGN KEY (pago_id) REFERENCES pago(id),
 	FOREIGN KEY (subservicio_id) REFERENCES subservicio(id)   
 );
+
+CREATE TABLE contador_serie (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    valor_actual VARCHAR(255) NOT NULL
+);
+INSERT INTO contador_serie (valor_actual)
+VALUES ('001');
+
+CREATE TABLE contador_secuencia (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    valor_actual INT NOT NULL
+);
+INSERT INTO contador_secuencia (valor_actual)
+VALUES (1);
+
+--------------------------------------------
 
 SELECT p.id, p.codigo,
  p.pagado,
@@ -235,9 +255,35 @@ INNER JOIN cliente c on p.cliente_id=c.id
 INNER JOIN medio_pago mp on p.medio_pago_id=mp.id
 INNER JOIN usuario u on p.usuario_id=u.id
 INNER JOIN persona pe on u.id=pe.id_usuario
-WHERE c.id=1 AND p.entregado=FALSE and p.enabled=true
+WHERE c.id=4 AND p.entregado=FALSE and p.enabled=true
 ORDER BY P.fecha_creacion DESC;
 
 SELECT id cod ,descripcion nombre FROM servicio WHERE enabled=1 ORDER BY cod ASC;
 SELECT id cod ,descripcion nombre FROM subservicio WHERE enabled=1 AND servicio_id=1 ORDER BY cod ASC;
+
+SELECT p.id,p.codigo,p.pagado,p.entregado,p.medio_pago_id,p.porcentaje_pago,
+	p.monto_pagado_inicial,
+    p.monto_total,
+    DATE_FORMAT(p.fecha_recojo, '%Y-%m-%d') AS fecha_entrega,
+    DATE_FORMAT(p.fecha_creacion, '%d/%m/%Y %H:%i:%s') AS fecha_creacion,
+    p.observacion
+ FROM pago p WHERE p.id=3 AND p.enabled=true;
+ 
+ SELECT d.cantidad,d.monto,d.monto_total,d.tipo,d.detalle_tipo,d.subservicio_id FROM pago_detalle d
+ WHERE d.pago_id=3 AND D.enabled=true;
+ 
+ SELECT d.subservicio_id cod,
+ CONCAT(s.descripcion,' / ',sub.descripcion) AS nombre,
+ d.solo_seleccion,
+ d.tipo,
+ d.detalle_tipo,
+ d.monto,
+ d.cantidad,
+ d.monto_total
+ FROM pago_detalle d
+ INNER JOIN subservicio sub ON d.subservicio_id=sub.id
+ INNER JOIN servicio s ON sub.servicio_id=s.id
+ WHERE d.pago_id=3 AND D.enabled=true;
+
+ 
 
