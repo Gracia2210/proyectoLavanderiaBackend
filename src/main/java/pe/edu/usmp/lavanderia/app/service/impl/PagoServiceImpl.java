@@ -68,8 +68,8 @@ public class PagoServiceImpl implements PagoService {
     }
 
     @Override
-    public ModelResponse<String> generarBoleta(OrdenPagoRequest request) {
-        ModelResponse<String> resp = new ModelResponse<>();
+    public ModelResponse<Integer> generarBoleta(OrdenPagoRequest request) {
+        ModelResponse<Integer> resp = new ModelResponse<>();
         String codigo=pagoRepository.generarCodigo();
         if(pagoRepository.existeCodigo(codigo)) {
             resp.setIcon(Constantes.ICON_INFO);
@@ -88,7 +88,7 @@ public class PagoServiceImpl implements PagoService {
                 resp.setIcon(Constantes.ICON_SUCCESS);
                 resp.setMensaje("Se ha generado la boleta de pago N° "+codigo+" satisfactoriamente");
                 resp.setMensajeTxt("Por favor revisar si todos los datos son correctos");
-                resp.setModel(codigo);
+                resp.setModel(pago);
             }
             else{
                 resp.setMensaje("Se ha producido un error al generar el boleta");

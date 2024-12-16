@@ -147,6 +147,11 @@ Teléfono: 2426452]]></text>
 			</image>
 			<textField>
 				<reportElement x="145" y="9" width="45" height="9" uuid="94046d0c-b16e-41ea-a10c-c359a87d2e0e"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="6" isBold="true"/>
 				</textElement>
@@ -157,6 +162,12 @@ Teléfono: 2426452]]></text>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="4"/>
 				</textElement>
@@ -223,9 +234,9 @@ Teléfono: 2426452]]></text>
 		</band>
 	</pageHeader>
 	<detail>
-		<band height="12" splitType="Stretch">
+		<band height="16" splitType="Stretch">
 			<line>
-				<reportElement positionType="FixRelativeToBottom" mode="Opaque" x="-12" y="11" width="202" height="1" uuid="b6138bfa-7e94-4bcb-bc2d-2d442e7b4b90">
+				<reportElement positionType="FixRelativeToBottom" mode="Transparent" x="-12" y="15" width="202" height="1" uuid="b6138bfa-7e94-4bcb-bc2d-2d442e7b4b90">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
@@ -234,7 +245,7 @@ Teléfono: 2426452]]></text>
 				</graphicElement>
 			</line>
 			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
-				<reportElement x="-12" y="0" width="28" height="11" uuid="710a7c2a-f3a2-4ccb-bd80-9d6d16405967"/>
+				<reportElement x="-12" y="0" width="28" height="15" uuid="710a7c2a-f3a2-4ccb-bd80-9d6d16405967"/>
 				<box topPadding="0" leftPadding="5" bottomPadding="6" rightPadding="4">
 					<leftPen lineWidth="0.5"/>
 				</box>
@@ -243,33 +254,33 @@ Teléfono: 2426452]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
 			</textField>
-			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
-				<reportElement x="16" y="0" width="94" height="11" uuid="c188c7a9-9a88-4942-a247-abfed71781ba"/>
+			<textField textAdjust="ScaleFont" isBlankWhenNull="true">
+				<reportElement x="16" y="0" width="94" height="15" uuid="c188c7a9-9a88-4942-a247-abfed71781ba"/>
 				<box topPadding="0" leftPadding="5" bottomPadding="6" rightPadding="4">
 					<leftPen lineWidth="0.5"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Justified">
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
 					<font size="4"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
-				<reportElement x="146" y="0" width="44" height="11" uuid="af7b2632-86d2-4b62-a0b3-e6020378d5af"/>
+				<reportElement x="146" y="0" width="44" height="15" uuid="af7b2632-86d2-4b62-a0b3-e6020378d5af"/>
 				<box topPadding="0" leftPadding="5" bottomPadding="6" rightPadding="2">
 					<leftPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
 				</box>
-				<textElement textAlignment="Right" verticalAlignment="Justified">
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
 					<font size="4"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{montoTotal}]]></textFieldExpression>
 			</textField>
-			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
-				<reportElement x="110" y="0" width="36" height="11" uuid="e701de5c-82c7-48ab-b619-a48659ed4a9f"/>
+			<textField textAdjust="ScaleFont" isBlankWhenNull="true">
+				<reportElement x="110" y="0" width="36" height="15" uuid="e701de5c-82c7-48ab-b619-a48659ed4a9f"/>
 				<box topPadding="0" leftPadding="5" bottomPadding="6" rightPadding="4">
 					<leftPen lineWidth="0.5"/>
 				</box>
-				<textElement textAlignment="Center">
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
 					<font size="4"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{detalleTipo}]]></textFieldExpression>
@@ -294,7 +305,7 @@ Teléfono: 2426452]]></text>
 				</textElement>
 				<text><![CDATA[Observaciones:]]></text>
 			</staticText>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="-12" y="15" width="102" height="30" uuid="b29a5e99-b37f-48a5-a066-e8478eea36b7"/>
 				<box topPadding="1" leftPadding="3" bottomPadding="1" rightPadding="3">
 					<topPen lineWidth="0.5"/>

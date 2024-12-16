@@ -36,7 +36,7 @@ public class PagoController {
         return pagoService.listarMedioPagos();
     }
     @RequestMapping(value = "generarBoleta", method = RequestMethod.POST)
-    public ModelResponse<String> generarBoleta(@RequestBody OrdenPagoRequest request){
+    public ModelResponse<Integer> generarBoleta(@RequestBody OrdenPagoRequest request){
         return pagoService.generarBoleta(request);
     }
     @RequestMapping(value = "obtenerPagoEdit", method = RequestMethod.GET)

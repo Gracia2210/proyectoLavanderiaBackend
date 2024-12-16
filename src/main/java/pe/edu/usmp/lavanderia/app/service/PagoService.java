@@ -10,7 +10,7 @@ public interface PagoService {
     List<CodNombreResponse> listarServicios();
     List<SubserviciosPagoResponse> listarSubservicios(Integer servicioId);
     List<CodNombreResponse> listarMedioPagos();
-    ModelResponse<String> generarBoleta(OrdenPagoRequest request);
+    ModelResponse<Integer> generarBoleta(OrdenPagoRequest request);
     ModelResponse<OrdenPagoEditResponse> obtenerPagoEdit(Integer pago);
     MsgResponse edicionBoleta(OrdenPagoRequest request);
     ModelResponse<String> imprimirBoleta(Integer pago) throws Exception;
