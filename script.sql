@@ -90,7 +90,8 @@ INSERT INTO servicio (descripcion) VALUES
 ('Servicio Express'),
 ('Edredones o Cobertores'),
 ('Alfombras'),
-('Cortinas');
+('Cortinas'),
+('Servicios Especiales');
 
 CREATE TABLE subservicio (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -171,6 +172,15 @@ INSERT INTO subservicio (descripcion, monto, servicio_id) VALUES
 ('Pequeña', 15.00, 11),
 ('Mediana', 20.00, 11),
 ('Grande', 25.00, 11);
+
+-- Servicios especiales
+INSERT INTO subservicio (descripcion, monto, servicio_id) VALUES 
+('Cuero', 10.00, 12),
+('kasmir', 10.00, 12),
+('Cuerina', 10.00, 12),
+('Terciopelo', 10.00, 12),
+('Pima', 10.00, 12);
+
 
 
 CREATE TABLE medio_pago (

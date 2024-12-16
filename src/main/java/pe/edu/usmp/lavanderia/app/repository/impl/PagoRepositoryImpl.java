@@ -207,7 +207,7 @@ public class PagoRepositoryImpl extends JdbcDaoSupport implements PagoRepository
                 "CONCAT(pe.apellido_paterno, ' ', pe.apellido_materno, ' ', pe.nombre) AS usuario, " +
                 "DATE_FORMAT(p.fecha_creacion, '%d/%m/%Y %H:%i:%s') AS fecha_creacion, " +
                 "DATE_FORMAT(p.fecha_recojo, '%d/%m/%Y') AS fecha_entrega, " +
-                "pe.telefono " +
+                "c.telefono " +
                 "FROM pago p " +
                 "INNER JOIN cliente c ON p.cliente_id = c.id " +
                 "INNER JOIN medio_pago mp ON p.medio_pago_id = mp.id " +
@@ -242,4 +242,5 @@ public class PagoRepositoryImpl extends JdbcDaoSupport implements PagoRepository
         ordenPago.setPago(detalles);
         return ordenPago;
     }
+
 }
