@@ -3,6 +3,7 @@ package pe.edu.usmp.lavanderia.app.rest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pe.edu.usmp.lavanderia.app.request.ListarPagosxClienteRequest;
 import pe.edu.usmp.lavanderia.app.request.OrdenPagoRequest;
 import pe.edu.usmp.lavanderia.app.response.*;
 import pe.edu.usmp.lavanderia.app.service.PagoService;
@@ -19,9 +20,9 @@ public class PagoController {
         this.pagoService = pagoService;
     }
 
-    @RequestMapping(value = "listarPagosxCliente", method = RequestMethod.GET)
-    public ListModelResponse<ListaClientePagoResponse> listarPagosxCliente(@RequestParam Integer clienteId) {
-        return pagoService.listarPagosxCliente(clienteId);
+    @RequestMapping(value = "listarPagosxCliente", method = RequestMethod.POST)
+    public ListModelResponse<ListaClientePagoResponse> listarPagosxCliente(@RequestBody ListarPagosxClienteRequest request) {
+        return pagoService.listarPagosxCliente(request);
     }
     @RequestMapping(value = "listarServicios", method = RequestMethod.GET)
     public List<CodNombreResponse> listarServicios() {

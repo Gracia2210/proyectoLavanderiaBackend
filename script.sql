@@ -203,6 +203,7 @@ CREATE TABLE pago (
     codigo VARCHAR(255) NOT NULL,
 	pagado BOOLEAN DEFAULT FALSE,
 	entregado BOOLEAN DEFAULT FALSE,
+	cancelado BOOLEAN DEFAULT FALSE,
     cliente_id INT NOT NULL,
     medio_pago_id INT,
 	porcentaje_pago DECIMAL(10, 2) NULL,
@@ -324,7 +325,7 @@ CASE
  mp.descripcion AS medio_pago, p.monto_pagado_inicial,
  p.monto_total, CONCAT(pe.apellido_paterno, ' ',pe.apellido_materno, ' ' ,pe.nombre) 
  AS usuario, DATE_FORMAT(p.fecha_creacion, '%d/%m/%Y %H:%i:%s') AS fecha_creacion, 
- DATE_FORMAT(p.fecha_recojo, '%d/%m/%Y') AS fecha_entrega,pe.telefono
+ DATE_FORMAT(p.fecha_recojo, '%d/%m/%Y') AS fecha_entrega,c.telefono
  FROM pago p 
  INNER JOIN cliente c on p.cliente_id=c.id INNER JOIN medio_pago mp on p.medio_pago_id=mp.id
  INNER JOIN usuario u on p.usuario_id=u.id INNER JOIN persona pe on u.id=pe.id_usuario

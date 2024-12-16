@@ -7,6 +7,7 @@ public class OrdenPagoRequest {
     private Integer medioPago;
     private String codigo;
     private boolean pagado;
+    private boolean entregado;
     private Integer cliente;
     private String fechaRecojo;
     private String montoPagado;
@@ -101,5 +102,13 @@ public class OrdenPagoRequest {
 
     public void setPorcentaje(double porcentaje) {
         this.porcentaje = porcentaje;
+    }
+
+    public boolean isEntregado() {
+        return entregado;
+    }
+
+    public void setEntregado(boolean entregado) {
+        this.entregado = entregado;
     }
 }

@@ -12,6 +12,7 @@ import org.apache.pdfbox.io.IOUtils;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import pe.edu.usmp.lavanderia.app.repository.PagoRepository;
+import pe.edu.usmp.lavanderia.app.request.ListarPagosxClienteRequest;
 import pe.edu.usmp.lavanderia.app.request.OrdenPagoRequest;
 import pe.edu.usmp.lavanderia.app.request.ServicioPagoRequest;
 import pe.edu.usmp.lavanderia.app.response.*;
@@ -38,9 +39,9 @@ public class PagoServiceImpl implements PagoService {
     }
 
     @Override
-    public ListModelResponse<ListaClientePagoResponse> listarPagosxCliente(Integer clienteId) {
+    public ListModelResponse<ListaClientePagoResponse> listarPagosxCliente(ListarPagosxClienteRequest request) {
         ListModelResponse<ListaClientePagoResponse> resp = new ListModelResponse<>();
-        List<ListaClientePagoResponse> lista = pagoRepository.listarPagosxCliente(clienteId);
+        List<ListaClientePagoResponse> lista = pagoRepository.listarPagosxCliente(request);
         if (!lista.isEmpty()) {
             resp.setCod(Constantes.SUCCESS_COD);
             resp.setIcon(Constantes.ICON_SUCCESS);
@@ -128,10 +129,10 @@ public class PagoServiceImpl implements PagoService {
             for(ServicioPagoRequest detalle:request.getPagos()){
                 pagoRepository.insertarDetalleBoleta(detalle,request.getId());
             }
-            pagoRepository.actualizarContadorSecuencia();
             resp.setCod(Constantes.SUCCESS_COD);
             resp.setIcon(Constantes.ICON_SUCCESS);
-            resp.setMensaje("Se ha modificado la información de la boleta de pago N° "+request.getCodigo()+" satisfactoriamente");
+            String text=request.isEntregado()?"Se ha culminado con el servicio de la boleta de pago N° "+request.getCodigo()+" satisfactoriamente":"Se ha modificado la información de la boleta de pago N° "+request.getCodigo()+" satisfactoriamente";
+            resp.setMensaje(text);
             resp.setMensajeTxt("Por favor revisar si todos los datos son correctos");
         }
         else{
