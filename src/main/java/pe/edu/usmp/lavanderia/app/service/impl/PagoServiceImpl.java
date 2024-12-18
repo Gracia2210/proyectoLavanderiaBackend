@@ -50,7 +50,7 @@ public class PagoServiceImpl implements PagoService {
         } else {
             resp.setCod(Constantes.NULL_COD);
             resp.setIcon(Constantes.ICON_INFO);
-            resp.setMensaje("No se han encontrado pagos pendientes");
+            resp.setMensaje("No se han encontrado pagos");
             resp.setMensajeTxt("Puede registrar un nuevo pago dando click al boton 'Registrar Nuevo Servicio''");
         }
         return resp;
@@ -191,6 +191,23 @@ public class PagoServiceImpl implements PagoService {
         }
         else{
             resp.setMensaje("No se ha encontrado la boleta");
+            resp.setMensajeTxt("Por favor coordinar con soporte del sistema");
+        }
+        return resp;
+    }
+
+    @Override
+    public MsgResponse anularPago(Integer pago,String codigo) {
+        MsgResponse resp = new MsgResponse();
+        Integer editarCabecera=pagoRepository.anularPago(pago);
+        if(editarCabecera>0){
+            resp.setCod(Constantes.SUCCESS_COD);
+            resp.setIcon(Constantes.ICON_SUCCESS);
+            resp.setMensaje("Se ha anulado la boleta N° "+codigo+" correctamente");
+            resp.setMensajeTxt("Por favor revisar si todos los datos son correctos");
+        }
+        else{
+            resp.setMensaje("Se ha producido un error al anular la boleta");
             resp.setMensajeTxt("Por favor coordinar con soporte del sistema");
         }
         return resp;

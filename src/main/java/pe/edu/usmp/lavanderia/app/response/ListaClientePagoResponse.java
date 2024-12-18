@@ -5,6 +5,7 @@ public class ListaClientePagoResponse {
     private String codigo;
     private boolean pagado;
     private boolean entregado;
+    private boolean cancelado;
     private String cliente;
     private String medioPago;
     private double porcentajePago;
@@ -108,5 +109,13 @@ public class ListaClientePagoResponse {
 
     public void setFechaEntrega(String fechaEntrega) {
         this.fechaEntrega = fechaEntrega;
+    }
+
+    public boolean isCancelado() {
+        return cancelado;
+    }
+
+    public void setCancelado(boolean cancelado) {
+        this.cancelado = cancelado;
     }
 }

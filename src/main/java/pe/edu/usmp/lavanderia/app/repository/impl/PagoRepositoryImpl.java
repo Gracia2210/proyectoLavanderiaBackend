@@ -36,21 +36,24 @@ public class PagoRepositoryImpl extends JdbcDaoSupport implements PagoRepository
     public List<ListaClientePagoResponse> listarPagosxCliente(ListarPagosxClienteRequest request) {
 
         StringBuilder sql = new StringBuilder(
-                "SELECT p.id, p.codigo, p.pagado, p.entregado, CONCAT(c.apellido_paterno, ' ', c.apellido_materno, ' ' ,c.nombre) AS cliente, mp.descripcion medio_pago, p.porcentaje_pago, p.monto_pagado_inicial, p.monto_total, CONCAT(pe.apellido_paterno, ' ',pe.apellido_materno, ' ' ,pe.nombre) AS usuario, DATE_FORMAT(p.fecha_creacion, '%d/%m/%Y %H:%i:%s') AS fecha_creacion, DATE_FORMAT(p.fecha_recojo, '%d/%m/%Y') AS fecha_entrega FROM pago p INNER JOIN cliente c on p.cliente_id=c.id INNER JOIN medio_pago mp on p.medio_pago_id=mp.id INNER JOIN usuario u on p.usuario_id=u.id INNER JOIN persona pe on u.id=pe.id_usuario WHERE c.id=? "
+                "SELECT p.id, p.codigo, p.pagado, p.entregado, p.cancelado, CONCAT(c.apellido_paterno, ' ', c.apellido_materno, ' ' ,c.nombre) AS cliente, mp.descripcion medio_pago, p.porcentaje_pago, p.monto_pagado_inicial, p.monto_total, CONCAT(pe.apellido_paterno, ' ',pe.apellido_materno, ' ' ,pe.nombre) AS usuario, DATE_FORMAT(p.fecha_creacion, '%d/%m/%Y %H:%i:%s') AS fecha_creacion, DATE_FORMAT(p.fecha_recojo, '%d/%m/%Y') AS fecha_entrega FROM pago p INNER JOIN cliente c on p.cliente_id=c.id INNER JOIN medio_pago mp on p.medio_pago_id=mp.id INNER JOIN usuario u on p.usuario_id=u.id INNER JOIN persona pe on u.id=pe.id_usuario WHERE c.id=? "
         );
 
         List<Object> params = new ArrayList<>();
         params.add(request.getClienteId());
 
         switch (request.getTipo()) {
-            case "1": sql.append(" AND p.entregado = false ");break;
-            case "2": sql.append(" AND p.entregado = true ");break;
+            case "1": sql.append(" AND p.entregado = false AND p.cancelado = false ");break;
+            case "2": sql.append(" AND p.entregado = true AND p.cancelado = false ");break;
             case "3": sql.append(" AND p.cancelado = true ");break;
             default: sql.append(" AND p.cancelado = false ");break;
         }
-        if(request.getInicio() != null) {
-
+        if (request.getInicio() != null && request.getFin() != null) {
+            sql.append(" AND p.fecha_creacion BETWEEN ? AND ? ");
+            params.add(request.getInicio());
+            params.add(request.getFin());
         }
+
 
         sql.append(" and p.enabled=true ORDER BY P.fecha_creacion DESC");
 
@@ -266,6 +269,16 @@ public class PagoRepositoryImpl extends JdbcDaoSupport implements PagoRepository
         );
         ordenPago.setPago(detalles);
         return ordenPago;
+    }
+
+    @Override
+    public Integer anularPago(Integer pago) {
+        String sql = "UPDATE pago " +
+                "SET  cancelado = TRUE " +
+                "WHERE id = ?";
+
+        return jdbcTemplate.update(sql,pago
+        );
     }
 
 }

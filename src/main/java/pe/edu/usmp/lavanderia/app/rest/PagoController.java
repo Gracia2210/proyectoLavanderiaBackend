@@ -52,4 +52,8 @@ public class PagoController {
     public ModelResponse<String> imprimirBoleta(@RequestParam Integer pago) throws Exception {
         return pagoService.imprimirBoleta(pago);
     }
+    @RequestMapping(value = "anularPago", method = RequestMethod.GET)
+    public MsgResponse anularPago(@RequestParam Integer pago,@RequestParam String codigo){
+        return pagoService.anularPago(pago, codigo);
+    }
 }

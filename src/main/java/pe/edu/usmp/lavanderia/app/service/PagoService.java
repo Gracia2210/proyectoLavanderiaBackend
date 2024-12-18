@@ -15,4 +15,6 @@ public interface PagoService {
     ModelResponse<OrdenPagoEditResponse> obtenerPagoEdit(Integer pago);
     MsgResponse edicionBoleta(OrdenPagoRequest request);
     ModelResponse<String> imprimirBoleta(Integer pago) throws Exception;
+    MsgResponse anularPago(Integer pago,String codigo);
+
 }

@@ -23,4 +23,6 @@ public interface PagoRepository {
     OrdenPagoEditResponse obtenerPagoEdit(Integer pago);
     Integer editarCabeceraBoleta(OrdenPagoRequest ordenPagoRequest);
     void eliminarDetalleTable(Integer pago);
-    OrdenPagoEditResponse imprimirBoleta(Integer pago);}
+    OrdenPagoEditResponse imprimirBoleta(Integer pago);
+    Integer anularPago(Integer pago);
+}
