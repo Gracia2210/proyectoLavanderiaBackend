@@ -37,7 +37,7 @@ public class ReporteRepositoryImpl extends JdbcDaoSupport implements ReporteRepo
                 "FROM pago p " +
                 "WHERE p.enabled = true " +
                 "AND p.fecha_creacion BETWEEN ? AND ? " +
-                "GROUP BY DATE_FORMAT(p.fecha_recojo, '%d/%m/%Y')";
+                "GROUP BY DATE_FORMAT(p.fecha_recojo, '%d/%m/%Y') LIMIT 5";
 
         return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(ReporteResponse.class), datos.getInicio(), datos.getFin());
     }
@@ -54,7 +54,7 @@ public class ReporteRepositoryImpl extends JdbcDaoSupport implements ReporteRepo
                 "AND pa.enabled = true " +
                 "AND p.enabled = true " +
                 "GROUP BY s.id " +
-                "ORDER BY detalle2 DESC";
+                "ORDER BY detalle2 DESC LIMIT 5";
 
         return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(ReporteResponse.class), datos.getInicio(), datos.getFin());
 
@@ -114,7 +114,7 @@ public class ReporteRepositoryImpl extends JdbcDaoSupport implements ReporteRepo
                 "WHERE p.enabled = true " +
                 "AND p.fecha_creacion BETWEEN ? AND ? " +
                 "GROUP BY c.id " +
-                "ORDER BY detalle1 DESC";
+                "ORDER BY detalle1 DESC LIMIT 5";
         return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(ReporteResponse.class), datos.getInicio(), datos.getFin());
 
     }
@@ -140,11 +140,28 @@ public class ReporteRepositoryImpl extends JdbcDaoSupport implements ReporteRepo
                 "FROM usuario u " +
                 "INNER JOIN persona pe ON u.id = pe.id_usuario " +
                 "INNER JOIN pago p ON u.id = p.usuario_id " +
-                "WHERE p.enabled = true " +
+                "WHERE p.enabled = true  AND p.entregado=true " +
                 "AND p.fecha_creacion BETWEEN ? AND ?" +
-                "GROUP BY pe.id";
+                "GROUP BY pe.id LIMIT 7";
         return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(ReporteResponse.class), datos.getInicio(), datos.getFin());
 
+    }
+
+    @Override
+    public List<ReporteResponse> listarDeudores(ReporteRequest datos) {
+        String sql = "SELECT p.codigo AS detalle1, " +
+                "CONCAT(c.nombre, ' ', c.apellido_paterno, ' ', c.apellido_materno) AS detalle2, " +
+                "(p.monto_total - p.monto_pagado_inicial) AS detalle3, " +
+                "DATE_FORMAT(p.fecha_creacion, '%d/%m/%Y %H:%i:%s') AS detalle4 " +
+                "FROM cliente c " +
+                "INNER JOIN pago p ON c.id = p.cliente_id " +
+                "INNER JOIN pago_detalle d ON p.id = d.pago_id " +
+                "WHERE p.enabled = true " +
+                "AND p.fecha_creacion BETWEEN ? AND ?" +
+                "AND p.pagado = false " +
+                "AND p.cancelado = false " +
+                "ORDER BY p.fecha_creacion  ASC";
+        return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(ReporteResponse.class), datos.getInicio(), datos.getFin());
     }
 
 

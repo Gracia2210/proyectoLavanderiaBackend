@@ -148,18 +148,19 @@ SUM(p.monto_total) detalle3
  from usuario u
 INNER JOIN persona pe ON u.id=pe.id_usuario
 INNER JOIN pago p ON u.id=p.usuario_id
-WHERE p.enabled=true
+WHERE p.enabled=true AND p.entregado=true
  AND p.fecha_creacion BETWEEN '2024-01-01 00:00:00' AND '2024-12-31 23:59:59'
  GROUP BY pe.id;
 
 -- deudas
 
 SELECT p.codigo detalle1, CONCAT(c.nombre, ' ', c.apellido_paterno, ' ' ,c.apellido_materno) AS detalle2,
-(p.monto_total-p.monto_pagado_inicial) detalle3
+(p.monto_total-p.monto_pagado_inicial) detalle3,
+ DATE_FORMAT(p.fecha_creacion, '%d/%m/%Y %H:%i:%s') detalle4
  FROM  cliente c
 INNER JOIN pago p ON c.id=p.cliente_id
 INNER JOIN pago_detalle d ON p.id=d.pago_id
 WHERE p.enabled=true
  AND p.fecha_creacion BETWEEN '2024-01-01 00:00:00' AND '2024-12-31 23:59:59'
- AND p.pagado= false
-
+ AND p.pagado= false AND p.cancelado=false
+ ORDER BY p.id ASC;
