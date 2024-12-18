@@ -88,24 +88,27 @@ public class PagoRepositoryImpl extends JdbcDaoSupport implements PagoRepository
     }
 
     @Override
-    public String generarCodigo() {
+    public GenerateCodigoDBResponse generarCodigo() {
+        GenerateCodigoDBResponse data = new GenerateCodigoDBResponse();
         String contadorSerie = jdbcTemplate.queryForObject(
                 "SELECT valor_actual FROM contador_serie LIMIT 1",
                 String.class
         );
-
+        data.setSerie(contadorSerie);
         Integer contadorSecuencia = jdbcTemplate.queryForObject(
                 "SELECT valor_actual FROM contador_secuencia LIMIT 1",
                 Integer.class
         );
-        String codigoGenerado = contadorSerie + "-" + String.format("%03d", contadorSecuencia);
-        return codigoGenerado;
+        data.setSecuencia(contadorSecuencia);
+        String codigoGenerado = contadorSerie + "-" + String.format("%06d", contadorSecuencia);
+        data.setCodigo(codigoGenerado);
+        return data;
     }
 
 
     @Override
     public Integer insertarCabeceraBoleta(OrdenPagoRequest ordenPagoRequest) {
-        String sql = "INSERT INTO pago ( codigo, pagado, cliente_id, medio_pago_id, porcentaje_pago, monto_pagado_inicial, monto_total, usuario_id, fecha_recojo, observacion ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
+        String sql = "INSERT INTO pago ( codigo, pagado, cliente_id, medio_pago_id, porcentaje_pago, monto_pagado_inicial, monto_total, usuario_id, fecha_recojo, observacion, serie , secuencia ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,? )";
         jdbcTemplate.update(sql,
                 ordenPagoRequest.getCodigo(),
                 ordenPagoRequest.isPagado(),
@@ -116,7 +119,10 @@ public class PagoRepositoryImpl extends JdbcDaoSupport implements PagoRepository
                 ordenPagoRequest.getMontoTotal(),
                 auth.idUsuario(),
                 LocalDate.parse(ordenPagoRequest.getFechaRecojo()),
-                ordenPagoRequest.getObservacion());
+                ordenPagoRequest.getObservacion(),
+                ordenPagoRequest.getSerie(),
+                ordenPagoRequest.getSecuencia()
+        );
 
         String idSql = "SELECT LAST_INSERT_ID()";
         return jdbcTemplate.queryForObject(idSql, Integer.class);

@@ -201,6 +201,8 @@ INSERT INTO medio_pago (descripcion) VALUES
 CREATE TABLE pago (
     id INT AUTO_INCREMENT PRIMARY KEY,
     codigo VARCHAR(255) NOT NULL,
+    serie VARCHAR(255) NOT NULL,
+    secuencia INT NOT NULL,
 	pagado BOOLEAN DEFAULT FALSE,
 	entregado BOOLEAN DEFAULT FALSE,
 	cancelado BOOLEAN DEFAULT FALSE,

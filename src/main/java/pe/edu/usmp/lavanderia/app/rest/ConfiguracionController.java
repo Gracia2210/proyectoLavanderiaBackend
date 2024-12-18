@@ -1,9 +1,7 @@
 package pe.edu.usmp.lavanderia.app.rest;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import pe.edu.usmp.lavanderia.app.request.EditarSecuenciaRequest;
 import pe.edu.usmp.lavanderia.app.response.*;
 import pe.edu.usmp.lavanderia.app.service.ConfiguracionService;
 
@@ -31,5 +29,13 @@ public class ConfiguracionController {
     public ModelResponse<byte[]> obtenerImagen(@RequestParam Long idArchivo) {
         return configuracionService.obtenerImagen(idArchivo);
     }
+    @RequestMapping(value = "listarSecuencia", method = RequestMethod.GET)
+    public ListModelResponse<ListaSecuenciaResponse> listarSecuencia(){
+        return configuracionService.listarSecuencia();
+    }
 
+    @RequestMapping(value = "editarSecuencia", method = RequestMethod.POST)
+    public MsgResponse editarSecuencia(@RequestBody EditarSecuenciaRequest datos){
+        return configuracionService.editarSecuencia(datos);
+    }
 }

@@ -11,4 +11,6 @@ public interface ServicioRepository {
     ServicioResponse buscarPorId(int id);
     int eliminarServicioPorId(int id);
     int activarServicio(int id,Boolean activo);
+
+
 }

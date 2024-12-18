@@ -5,6 +5,8 @@ import java.util.List;
 public class OrdenPagoRequest {
     private Integer id;
     private Integer medioPago;
+    private String serie;
+    private Integer secuencia;
     private String codigo;
     private boolean pagado;
     private boolean entregado;
@@ -110,5 +112,21 @@ public class OrdenPagoRequest {
 
     public void setEntregado(boolean entregado) {
         this.entregado = entregado;
+    }
+
+    public String getSerie() {
+        return serie;
+    }
+
+    public void setSerie(String serie) {
+        this.serie = serie;
+    }
+
+    public Integer getSecuencia() {
+        return secuencia;
+    }
+
+    public void setSecuencia(Integer secuencia) {
+        this.secuencia = secuencia;
     }
 }

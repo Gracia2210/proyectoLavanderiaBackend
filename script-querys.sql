@@ -64,4 +64,6 @@ FROM pago p
          INNER JOIN usuario u on p.usuario_id=u.id INNER JOIN persona pe on u.id=pe.id_usuario
 WHERE p.id=1 AND p.entregado=FALSE
   AND p.enabled=true
+SELECT s.id id_serie,s.valor_actual serie,c.id id_secuencia,c.valor_actual secuencia  FROM contador_serie s,contador_secuencia c;
 
+SELECT serie FROM pago ORDER BY id DESC LIMIT 1

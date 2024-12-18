@@ -1,6 +1,7 @@
 package pe.edu.usmp.lavanderia.app.service;
 
 import org.springframework.web.multipart.MultipartFile;
+import pe.edu.usmp.lavanderia.app.request.EditarSecuenciaRequest;
 import pe.edu.usmp.lavanderia.app.response.*;
 
 public interface ConfiguracionService {
@@ -9,5 +10,7 @@ public interface ConfiguracionService {
     ModelResponse<byte[]> obtenerImagen(Long idArchivo);
     ConfiguracionGlobalResponse configuracionGlobal();
     ModelResponse<ConfiguracionGlobalResponse>  obtenerConfiguracionGlobal();
+    ListModelResponse<ListaSecuenciaResponse> listarSecuencia();
+    MsgResponse editarSecuencia(EditarSecuenciaRequest datos);
 
 }

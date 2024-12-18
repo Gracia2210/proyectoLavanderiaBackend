@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import pe.edu.usmp.lavanderia.app.repository.ConfiguracionRepository;
 import pe.edu.usmp.lavanderia.app.request.EditarConfiguracionRequest;
+import pe.edu.usmp.lavanderia.app.request.EditarSecuenciaRequest;
 import pe.edu.usmp.lavanderia.app.response.*;
 import pe.edu.usmp.lavanderia.app.service.ConfiguracionService;
 import pe.edu.usmp.lavanderia.app.utils.Constantes;
@@ -107,6 +108,47 @@ public class ConfiguracionServiceImpl implements ConfiguracionService {
         else{
             resp.setMensaje("No se ha configuración");
         }
+        return resp;
+    }
+
+    @Override
+    public ListModelResponse<ListaSecuenciaResponse> listarSecuencia() {
+        ListModelResponse<ListaSecuenciaResponse> resp = new ListModelResponse<>();
+        List<ListaSecuenciaResponse> lista = configuracionRepository.listarSecuencia();
+        if (!lista.isEmpty()) {
+            resp.setCod(Constantes.SUCCESS_COD);
+            resp.setIcon(Constantes.ICON_SUCCESS);
+            resp.setMensaje("Se han encontrado secuencias");
+            resp.setList(lista);
+        } else {
+            resp.setCod(Constantes.NULL_COD);
+            resp.setIcon(Constantes.ICON_INFO);
+            resp.setMensaje("No se han encontrado secuencias");
+        }
+        return resp;
+    }
+
+    @Override
+    public MsgResponse editarSecuencia(EditarSecuenciaRequest datos) {
+        MsgResponse resp = new MsgResponse();
+        Integer ultimaSecuencia=configuracionRepository.obtenerUltimaSecuenciaPago();
+        String ultimaSerie=configuracionRepository.obtenerUltimaSeriePago();
+
+       if(ultimaSerie!=null && ultimaSecuencia>0){
+           if(ultimaSerie.equals(datos.getSerie())){
+               if(datos.getSecuencia()<=ultimaSecuencia){
+                   resp.setIcon(Constantes.ICON_INFO);
+                   resp.setMensaje("No puede agregar la secuencia "+datos.getSerie()+"-"+String.format("%06d", datos.getSecuencia())+" porque ya existe o se han generado boletas menores a esta");
+                   resp.setMensajeTxt("Por favor verificar el ultimo N° de Boleta generado");
+                   return resp;
+               }
+           }
+       }
+        configuracionRepository.editarSecuencia(datos);
+        resp.setCod(Constantes.SUCCESS_COD);
+        resp.setIcon(Constantes.ICON_SUCCESS);
+        resp.setMensaje("Se ha actualizado la serie y/o secuencia correctamente");
+        resp.setMensajeTxt("Por favor verificar si los cambios realizados se han efectuado correctamente");
         return resp;
     }
 }

@@ -129,7 +129,7 @@
 				<imageExpression><![CDATA[new ByteArrayInputStream(Base64.getDecoder().decode($P{logo}.getBytes()))]]></imageExpression>
 			</image>
 			<textField>
-				<reportElement x="145" y="9" width="45" height="9" uuid="94046d0c-b16e-41ea-a10c-c359a87d2e0e"/>
+				<reportElement x="140" y="9" width="50" height="9" uuid="94046d0c-b16e-41ea-a10c-c359a87d2e0e"/>
 				<box>
 					<leftPen lineWidth="0.5"/>
 					<bottomPen lineWidth="0.5"/>
@@ -141,7 +141,7 @@
 				<textFieldExpression><![CDATA[$P{codigo}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="145" y="1" width="45" height="8" uuid="dbe1659b-800f-4e7e-a724-cb69be8bbb35">
+				<reportElement x="140" y="1" width="50" height="8" uuid="dbe1659b-800f-4e7e-a724-cb69be8bbb35">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -157,7 +157,7 @@
 				<text><![CDATA[Número de Boleta]]></text>
 			</staticText>
 			<textField textAdjust="ScaleFont">
-				<reportElement x="14" y="-13" width="126" height="20" uuid="78cb7357-86b5-4f7f-8dd0-bfbe18ebef25"/>
+				<reportElement x="14" y="-13" width="116" height="20" uuid="78cb7357-86b5-4f7f-8dd0-bfbe18ebef25"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>

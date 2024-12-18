@@ -9,7 +9,9 @@ import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Repository;
 import pe.edu.usmp.lavanderia.app.repository.ConfiguracionRepository;
 import pe.edu.usmp.lavanderia.app.request.EditarConfiguracionRequest;
+import pe.edu.usmp.lavanderia.app.request.EditarSecuenciaRequest;
 import pe.edu.usmp.lavanderia.app.response.ConfiguracionResponse;
+import pe.edu.usmp.lavanderia.app.response.ListaSecuenciaResponse;
 
 import javax.sql.DataSource;
 import java.sql.PreparedStatement;
@@ -74,5 +76,37 @@ public class ConfiguracionRepositoryImpl extends JdbcDaoSupport implements Confi
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
+    }
+
+    @Override
+    public List<ListaSecuenciaResponse> listarSecuencia() {
+        String sql = "SELECT s.id id_serie,s.valor_actual serie,c.id id_secuencia,c.valor_actual secuencia  FROM contador_serie s,contador_secuencia c";
+        return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(ListaSecuenciaResponse.class));
+    }
+
+    @Override
+    public Integer obtenerUltimaSecuenciaPago() {
+        String sql = "SELECT secuencia FROM pago ORDER BY id DESC LIMIT 1";
+        try {
+            return jdbcTemplate.queryForObject(sql, Integer.class);
+        } catch (EmptyResultDataAccessException e) {
+            return 0;
+        }
+    }
+
+    @Override
+    public String obtenerUltimaSeriePago() {
+        String sql = "SELECT serie FROM pago ORDER BY id DESC LIMIT 1";
+        try {
+            return jdbcTemplate.queryForObject(sql, String.class);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
+    @Override
+    public void editarSecuencia(EditarSecuenciaRequest datos) {
+        jdbcTemplate.update("UPDATE contador_serie SET valor_actual = ? WHERE id = 1",datos.getSerie());
+        jdbcTemplate.update("UPDATE contador_secuencia SET valor_actual = ? WHERE id = 1",datos.getSecuencia());
     }
 }

@@ -74,14 +74,16 @@ public class PagoServiceImpl implements PagoService {
     @Override
     public ModelResponse<Integer> generarBoleta(OrdenPagoRequest request) {
         ModelResponse<Integer> resp = new ModelResponse<>();
-        String codigo=pagoRepository.generarCodigo();
-        if(pagoRepository.existeCodigo(codigo)) {
+        GenerateCodigoDBResponse codigo=pagoRepository.generarCodigo();
+        if(pagoRepository.existeCodigo(codigo.getCodigo())) {
             resp.setIcon(Constantes.ICON_INFO);
             resp.setMensaje("El código que se ha generado ("+codigo+") ya existe");
             resp.setMensajeTxt("Por favor coordinar con el administrador del sistema");
         }
         else{
-            request.setCodigo(codigo);
+            request.setCodigo(codigo.getCodigo());
+            request.setSerie(codigo.getSerie());
+            request.setSecuencia(codigo.getSecuencia());
             Integer pago = pagoRepository.insertarCabeceraBoleta(request);
             if(pago>0){
                 for(ServicioPagoRequest detalle:request.getPagos()){
@@ -90,7 +92,7 @@ public class PagoServiceImpl implements PagoService {
                 pagoRepository.actualizarContadorSecuencia();
                 resp.setCod(Constantes.SUCCESS_COD);
                 resp.setIcon(Constantes.ICON_SUCCESS);
-                resp.setMensaje("Se ha generado la boleta de pago N° "+codigo+" satisfactoriamente");
+                resp.setMensaje("Se ha generado la boleta de pago N° "+codigo.getCodigo()+" satisfactoriamente");
                 resp.setMensajeTxt("Por favor revisar si todos los datos son correctos");
                 resp.setModel(pago);
             }
@@ -203,7 +205,7 @@ public class PagoServiceImpl implements PagoService {
         if(editarCabecera>0){
             resp.setCod(Constantes.SUCCESS_COD);
             resp.setIcon(Constantes.ICON_SUCCESS);
-            resp.setMensaje("Se ha anulado la boleta N° "+codigo+" correctamente");
+            resp.setMensaje("Se ha cancelado la boleta N° "+codigo+" correctamente");
             resp.setMensajeTxt("Por favor revisar si todos los datos son correctos");
         }
         else{
