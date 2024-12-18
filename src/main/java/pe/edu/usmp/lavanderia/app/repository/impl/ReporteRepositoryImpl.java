@@ -149,18 +149,20 @@ public class ReporteRepositoryImpl extends JdbcDaoSupport implements ReporteRepo
 
     @Override
     public List<ReporteResponse> listarDeudores(ReporteRequest datos) {
-        String sql = "SELECT p.codigo AS detalle1, " +
-                "CONCAT(c.nombre, ' ', c.apellido_paterno, ' ', c.apellido_materno) AS detalle2, " +
-                "(p.monto_total - p.monto_pagado_inicial) AS detalle3, " +
-                "DATE_FORMAT(p.fecha_creacion, '%d/%m/%Y %H:%i:%s') AS detalle4 " +
+        String sql = "SELECT p.id AS detalle1, " +
+                "p.codigo AS detalle2, " +
+                "CONCAT(c.nombre, ' ', c.apellido_paterno, ' ', c.apellido_materno) AS detalle3, " +
+                "(p.monto_total - p.monto_pagado_inicial) AS detalle4, " +
+                "DATE_FORMAT(p.fecha_creacion, '%d/%m/%Y %H:%i:%s') AS detalle5 " +
                 "FROM cliente c " +
                 "INNER JOIN pago p ON c.id = p.cliente_id " +
                 "INNER JOIN pago_detalle d ON p.id = d.pago_id " +
                 "WHERE p.enabled = true " +
-                "AND p.fecha_creacion BETWEEN ? AND ?" +
+                "AND p.fecha_creacion BETWEEN ? AND ? " +
                 "AND p.pagado = false " +
                 "AND p.cancelado = false " +
-                "ORDER BY p.fecha_creacion  ASC";
+                "ORDER BY p.fecha_creacion ASC";
+
         return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(ReporteResponse.class), datos.getInicio(), datos.getFin());
     }
 

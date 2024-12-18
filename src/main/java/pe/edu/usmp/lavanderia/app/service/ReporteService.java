@@ -15,4 +15,6 @@ public interface ReporteService {
     List<ReporteResponse> listaMedioPagosMonto(ReporteRequest datos);
     List<ReporteResponse> listaIngresoUsuario(ReporteRequest datos);
     ListModelResponse<ReporteResponse> listarDeudores(ReporteRequest datos);
+    String exportarReportesPDF(ReporteRequest datos) throws Exception;
+    byte[] exportarReportesExcel(ReporteRequest datos) throws Exception;
 }

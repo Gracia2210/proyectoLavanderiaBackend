@@ -1,6 +1,7 @@
 package pe.edu.usmp.lavanderia.app.request;
 
 public class ReporteRequest {
+    private String reporte;
     private String inicio;
     private String fin;
 
@@ -18,5 +19,13 @@ public class ReporteRequest {
 
     public void setFin(String fin) {
         this.fin = fin;
+    }
+
+    public String getReporte() {
+        return reporte;
+    }
+
+    public void setReporte(String reporte) {
+        this.reporte = reporte;
     }
 }

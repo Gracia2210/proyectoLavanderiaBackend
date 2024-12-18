@@ -5,6 +5,7 @@ public class ReporteResponse {
     private String detalle2;
     private String detalle3;
     private String detalle4;
+    private String detalle5;
 
     public String getDetalle1() {
         return detalle1;
@@ -36,5 +37,13 @@ public class ReporteResponse {
 
     public void setDetalle4(String detalle4) {
         this.detalle4 = detalle4;
+    }
+
+    public String getDetalle5() {
+        return detalle5;
+    }
+
+    public void setDetalle5(String detalle5) {
+        this.detalle5 = detalle5;
     }
 }
